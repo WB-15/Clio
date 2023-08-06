@@ -1,0 +1,30 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE_BUNDLE === 'true',
+})
+
+/** @type {import('next').NextConfig} */
+const nextConfig = withBundleAnalyzer({
+  reactStrictMode: true,
+  experimental: {
+    appDir: true,
+  },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+  modularizeImports: {
+    '@/app/components/?(((\\w*)?/?)*)': {
+      transform: '@/app/components/{{ matches.[1] }}/{{ member }}',
+      skipDefaultConversion: true,
+    },
+    '@/utils/?(((\\w*)?/?)*)': {
+      transform: '@/utils/{{ matches.[1] }}/{{ member }}',
+      skipDefaultConversion: true,
+    },
+    '@/hooks/?(((\\w*)?/?)*)': {
+      transform: '@/hooks/{{ matches.[1] }}/{{ member }}',
+      skipDefaultConversion: true,
+    },
+  },
+})
+
+module.exports = nextConfig
