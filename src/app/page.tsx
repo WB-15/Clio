@@ -1,18 +1,15 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
 
 import { Icon } from '@/app/components'
 
 import './page.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = { title: 'Home' }
 
 const Home = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="container flex min-h-screen flex-col items-center justify-between p-24">
       <div className="description">
         <p>
           Get started by editing&nbsp;
@@ -59,12 +56,10 @@ const Home = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={inter.className}>
+          <h2>
             Docs <span>-&gt;</span>
           </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
+          <p>Find in-depth information about Next.js features and API.</p>
         </a>
 
         <a
@@ -73,10 +68,10 @@ const Home = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={inter.className}>
+          <h2>
             Templates <span>-&gt;</span>
           </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
+          <p>Explore the Next.js 13 playground.</p>
         </a>
 
         <a
@@ -85,10 +80,10 @@ const Home = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={inter.className}>
+          <h2>
             Deploy <span>-&gt;</span>
           </h2>
-          <p className={inter.className}>
+          <p>
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>

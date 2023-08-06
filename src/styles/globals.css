@@ -1,0 +1,80 @@
+@import 'tailwindcss/base';
+@import 'scrollbar.css';
+
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  textarea,
+  input {
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  /* Firefox */
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  /* Chrome autofill */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition:
+            background-color 5000000s ease-in-out 0s,
+            color 5000000s ease-in-out 0s;
+  }
+}
+
+@layer utilities {
+  .rotate-x-180 {
+    transform: rotateX(180deg);
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .hide-scrollbar {
+    /* https://blogs.msdn.microsoft.com/kurlak/2013/11/03/hiding-vertical-scrollbars-with-pure-css-in-chrome-ie-6-firefox-opera-and-safari/ */
+    /* There is a CSS rule that can hide scrollbars in Webkit-based browsers (Chrome and Safari). */
+    &::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    &::-webkit-scrollbar-track {
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    /* There is a CSS rule that can hide scrollbars in IE 10+.*/
+    -ms-overflow-style: none !important;
+
+    /* Use -ms-autohiding-scrollbar if you wish to display on hover. */
+    /* -ms-overflow-style: -ms-autohiding-scrollbar; */
+
+    /* There used to be a CSS rule that could hide scrollbars in Firefox, but it has since been deprecated. */
+    scrollbar-width: none !important;
+  }
+
+  .outline-none-force {
+    outline: none;
+  }
+
+  .container {
+    @apply mx-auto w-full max-w-[1400px] px-9;
+  }
+}

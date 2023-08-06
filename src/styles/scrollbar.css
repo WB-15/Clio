@@ -1,0 +1,30 @@
+@layer base {
+  * {
+    /* Mozilla Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.neutral.400') transparent;
+  }
+
+  /* Styled scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.neutral.400');
+    border-radius: 3px;
+
+    &:hover {
+      background: theme('colors.neutral.400');
+    }
+  }
+
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
+
+  ::selection {
+    background: theme('colors.primary.DEFAULT / 30%');
+  }
+}
