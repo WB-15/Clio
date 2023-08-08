@@ -11,8 +11,9 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
+      white: '#fff',
       primary: {
-        DEFAULT: '#0D5AFD',
+        500: '#0D5AFD',
       },
       neutral: {
         50: '#F9FAFB',
@@ -23,8 +24,20 @@ module.exports = {
         600: '#4B5563',
         900: '#0F172A',
       },
+      red: {
+        400: '#F13232',
+      },
     },
-    extend: {},
+    extend: {
+      lineHeight: {
+        3.5: '0.875rem',
+      },
+      data: {
+        enabled: 'disabled="false"',
+        disabled: 'disabled="true"',
+        loading: 'loading="true"',
+      },
+    },
   },
   plugins: [
     plugin(function ({ addVariant }) {

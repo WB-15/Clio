@@ -1,8 +1,11 @@
 @import 'tailwindcss/base';
 @import 'scrollbar.css';
+@import 'keyframes.css';
 
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@import 'components/components.css';
 
 @layer base {
   body {

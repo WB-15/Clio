@@ -1,0 +1,15 @@
+@layer components {
+  .button {
+    &:is([data-disabled='true'], [data-disabled='loading']):is(a) {
+      pointer-events: none;
+    }
+
+    &-loading-text {
+      &::after {
+        display: inline-block;
+        animation: dotty steps(1, end) 1.5s infinite;
+        content: '';
+      }
+    }
+  }
+}
