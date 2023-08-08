@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 const TITLE = 'Homepage'
-const SITE_NAME = 'AP Starter Next'
+const SITE_NAME = 'Clio'
 const DESCRIPTION = 'Next.js started configured by Andrii Pozniakov'
 
 const CANONICAL_URL =
@@ -19,7 +19,7 @@ export const DEFAULT_METADATA: Metadata = {
   metadataBase: canonicalUrlObject,
   title: { default: SITE_NAME, template: `%s — ${SITE_NAME}` },
   description: DESCRIPTION,
-  colorScheme: 'dark',
+  colorScheme: 'light',
   themeColor: THEME_COLOR,
   generator: 'Next.js',
   alternates: {

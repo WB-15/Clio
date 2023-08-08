@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { DM_Sans } from 'next/font/google'
+import clsx from 'clsx'
 
 import '@/styles/globals.css'
 import { DEFAULT_METADATA } from '@/constants'
@@ -13,7 +14,9 @@ export const metadata = DEFAULT_METADATA
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body className={dmSans.className}>{children}</body>
+      <body className={clsx('bg-neutral-50', dmSans.className)}>
+        {children}
+      </body>
     </html>
   )
 }
