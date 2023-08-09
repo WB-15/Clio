@@ -45,28 +45,26 @@ const EmailForm: FC<LoginFormProps> = (props) => {
     mutateUserAuth({ email: formData.email }).then((response) => {
       const errorMessage = parseError(response)
 
-      if (errorMessage) {
-        addToastToStack({
-          title: 'Error',
-          variant: 'danger',
-          description: errorMessage,
-        })
-
-        return
+      switch (true) {
+        case response === 'OK':
+          handleUserEmail(formData.email)
+          handleNextStep()
+          return
+        case !!errorMessage:
+          if (errorMessage)
+            addToastToStack({
+              title: 'Error',
+              variant: 'danger',
+              description: errorMessage,
+            })
+          return
+        default:
+          addToastToStack({
+            title: 'Error',
+            variant: 'danger',
+            description: 'Something went wrong please try again',
+          })
       }
-
-      if (response === 'OK') {
-        handleUserEmail(formData.email)
-        handleNextStep()
-
-        return
-      }
-
-      addToastToStack({
-        title: 'Error',
-        variant: 'danger',
-        description: 'Something went wrong please try again',
-      })
     })
   }
 

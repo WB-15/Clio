@@ -11,6 +11,15 @@ const nextConfig = withBundleAnalyzer({
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/login',
+        permanent: true,
+      },
+    ]
+  },
   modularizeImports: {
     '@/app/components/?(((\\w*)?/?)*)': {
       transform: '@/app/components/{{ matches.[1] }}/{{ member }}',

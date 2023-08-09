@@ -9,6 +9,7 @@ import { Button } from '@/app/components'
 import { postUserAuthVerify } from '@/query'
 import { addToastToStack, parseError } from '@/utils'
 import { RouteURL } from '@/constants'
+import { updateAuthTokensCookies } from '@/utils/cookie'
 
 import FormHeading from '../FormHeading'
 import WrappedOtpInput from './components/WrappedOtpInput'
@@ -48,17 +49,25 @@ const OtpForm: FC<OtpFormProps> = (props) => {
     mutateUserAuth({ email, code: formData.otpCode || '' }).then((response) => {
       const errorMessage = parseError(response)
 
-      if (errorMessage) {
-        addToastToStack({
-          title: 'Error',
-          variant: 'danger',
-          description: errorMessage,
-        })
-
-        return
+      switch (true) {
+        case !!response?.token:
+          updateAuthTokensCookies(response?.token)
+          router.push(RouteURL.SITE)
+          return
+        case !!errorMessage:
+          addToastToStack({
+            title: 'Error',
+            variant: 'danger',
+            description: errorMessage,
+          })
+          return
+        default:
+          addToastToStack({
+            title: 'Error',
+            variant: 'danger',
+            description: 'Something went wrong please try again',
+          })
       }
-
-      router.push(RouteURL.SITE)
     })
   }
 
