@@ -11,7 +11,7 @@ export const OptionalErrorMessage: FC<OptionalErrorMessageProps> = (props) => {
   if (!errorText) return null
 
   return (
-    <div {...rest} className={clsx('text-sm text-red-400', className)}>
+    <div {...rest} className={clsx('text-sm text-red-600', className)}>
       {errorText}
     </div>
   )

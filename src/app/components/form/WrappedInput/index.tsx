@@ -46,8 +46,8 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
             className={clsx(
               'peer min-w-0 rounded-lg border px-2.5 py-1.5 duration-300 ease-out placeholder:opacity-0',
               isErrorStyleActive
-                ? 'border-red-400'
-                : 'border-neutral-200 hocus:border-primary-500'
+                ? 'border-red-600'
+                : 'border-neutral-200 hover:border-neutral-400 focus:border-primary-500'
             )}
             {...rest}
           />

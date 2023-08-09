@@ -13,7 +13,11 @@ module.exports = {
       current: 'currentColor',
       white: '#fff',
       primary: {
+        50: '#B9DFFF',
         500: '#0D5AFD',
+        600: '#135EFD',
+        700: '#0044E4',
+        900: '#0021C9',
       },
       neutral: {
         50: '#F9FAFB',
@@ -24,11 +28,23 @@ module.exports = {
         600: '#4B5563',
         900: '#0F172A',
       },
+      green: {
+        50: '#EBF4EE',
+        100: '#C7E0CE',
+        200: '#74B185',
+        500: '#53B270',
+      },
       red: {
-        400: '#F13232',
+        50: '#FBF0F0',
+        100: '#FAC7CC',
+        300: '#D96566',
+        600: '#F13232',
       },
     },
     extend: {
+      zIndex: {
+        toast: 1950,
+      },
       lineHeight: {
         3.5: '0.875rem',
       },

@@ -38,8 +38,8 @@ const WrappedOtpInput: FC<WrappedOtpInputProps> = (props) => {
             className={clsx(
               'flex-1 rounded-lg border border-neutral-200 p-3 text-sm text-neutral-900 duration-300 ease-out',
               isErrorStyleActive
-                ? 'border-red-400'
-                : 'border-neutral-200 hocus:border-primary-500'
+                ? 'border-red-600'
+                : 'border-neutral-200 hover:border-neutral-300 focus:border-primary-500'
             )}
           />
         )}

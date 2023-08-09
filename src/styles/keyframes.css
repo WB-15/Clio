@@ -1,24 +1,50 @@
 @layer utilities {
-    /* "..." animation for loading */
-    @keyframes dotty {
-        0% {
-            content: '';
-        }
-
-        25% {
-            content: '.';
-        }
-
-        50% {
-            content: '..';
-        }
-
-        75% {
-            content: '...';
-        }
-
-        100% {
-            content: '';
-        }
+  @keyframes slideLeft {
+    from {
+      transform: translateX(32px);
     }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes collapseToast {
+    to {
+      height: 0;
+      margin-top: 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes swipeOut {
+    from {
+      transform: translateX(var(--radix-toast-swipe-end-x));
+    }
+    to {
+      transform: translateX(calc(100% + 16px));
+    }
+  }
+
+  /* "..." animation for loading */
+  @keyframes dotty {
+    0% {
+        content: '';
+    }
+
+    25% {
+        content: '.';
+    }
+
+    50% {
+        content: '..';
+    }
+
+    75% {
+        content: '...';
+    }
+
+    100% {
+        content: '';
+    }
+  }
 }

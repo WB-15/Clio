@@ -1,5 +1,5 @@
 @layer base {
   .inline-link {
-    @apply text-sm text-primary-500 underline duration-300 ease-out hocus:text-red-400;
+    @apply text-sm text-primary-500 underline duration-300 ease-out hocus:text-primary-900;
   }
 }

@@ -35,9 +35,9 @@ export const Button = <T extends ElementType = 'button'>(
       data-disabled={disabled}
       data-loading={isLoading}
       className={clsx(
-        'button flex h-9 items-center justify-center gap-2 rounded-lg text-sm font-medium leading-3.5 duration-300 ease-out data-disabled:opacity-50',
+        'button flex h-9 items-center justify-center gap-2 rounded-lg text-sm font-medium leading-3.5 duration-300 ease-out',
         {
-          'data-enabled:hocus:bg-primary bg-primary-500 text-white':
+          'data-enabled:hocus:bg-primary bg-primary-600 text-white hover:bg-primary-700 focus:bg-primary-900 data-disabled:bg-primary-50':
             variant === 'primary',
         },
         className

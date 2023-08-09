@@ -4,6 +4,7 @@ import clsx from 'clsx'
 
 import '@/styles/globals.css'
 import { DEFAULT_METADATA } from '@/constants'
+import { GlobalContextProvider, ToastManager } from '@/app/layoutComponents'
 
 export const runtime = 'edge'
 
@@ -14,9 +15,12 @@ export const metadata = DEFAULT_METADATA
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body className={clsx('bg-neutral-50', dmSans.className)}>
-        {children}
-      </body>
+      <GlobalContextProvider>
+        <body className={clsx('bg-neutral-50', dmSans.className)}>
+          {children}
+          <ToastManager />
+        </body>
+      </GlobalContextProvider>
     </html>
   )
 }
