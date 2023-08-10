@@ -42,7 +42,7 @@ const Toast: FC<ToastProps> = (props) => {
     >
       <RadixToast.Root
         ref={handleSetHeight}
-        className="toast-root relative mt-2 grid grid-cols-[auto_auto] grid-rows-[auto_auto] content-center items-center gap-x-3 rounded-xl border border-neutral-100 bg-white px-2.5 transition-all ease-in-out"
+        className="toast-root max-w-[min(80vw, 420px)] relative mt-2 grid grid-cols-[auto_auto] grid-rows-[auto_auto] content-center items-center gap-x-3 rounded-xl border border-neutral-100 bg-white px-2.5 transition-all ease-in-out"
         onOpenChange={handleToastClose}
       >
         <div

@@ -39,14 +39,19 @@ module.exports = {
         100: '#FAC7CC',
         300: '#D96566',
         600: '#F13232',
+        900: '#EB0404',
       },
     },
     extend: {
+      height: {
+        19: '76px',
+      },
       zIndex: {
         toast: 1950,
       },
       lineHeight: {
         3.5: '0.875rem',
+        4.5: '1.125rem',
       },
       data: {
         enabled: 'disabled="false"',
@@ -58,6 +63,7 @@ module.exports = {
   plugins: [
     plugin(function ({ addVariant }) {
       addVariant('hocus', ['&:hover', '&:focus'])
+      addVariant('group-hocus', ':merge(.group):is(:hover,:focus) &')
       addVariant('pseudos', ['&::before', '&::after'])
     }),
   ],

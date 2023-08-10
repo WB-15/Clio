@@ -1,19 +1,15 @@
-'use client'
-
 import React from 'react'
 
-import { Button } from '@/app/components'
-import { removeAuthTokensCookies } from '@/utils/cookie'
+export const metadata = {
+  title: 'Site',
+}
 
-const LoginPage = () => {
+const SitePage = () => {
   return (
-    <div className="container grid h-screen place-content-center">
+    <div className="container">
       <h1>SITE PAGE</h1>
-      <Button variant="primary" onClick={() => removeAuthTokensCookies()}>
-        Log out
-      </Button>
     </div>
   )
 }
 
-export default LoginPage
+export default SitePage

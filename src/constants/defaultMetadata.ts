@@ -9,7 +9,7 @@ const CANONICAL_URL =
   process.env.NEXT_PUBLIC_VERCEL_URL ||
   'http://localhost:3000'
 
-const THEME_COLOR = '#2A306C'
+const THEME_COLOR = '#fff'
 
 const canonicalUrlObject = new URL(
   CANONICAL_URL.startsWith('http') ? CANONICAL_URL : `https://${CANONICAL_URL}`
@@ -17,7 +17,7 @@ const canonicalUrlObject = new URL(
 
 export const DEFAULT_METADATA: Metadata = {
   metadataBase: canonicalUrlObject,
-  title: { default: SITE_NAME, template: `%s — ${SITE_NAME}` },
+  title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: DESCRIPTION,
   colorScheme: 'light',
   themeColor: THEME_COLOR,
