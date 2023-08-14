@@ -1,11 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
 
+import { mergeMetadataWithDefault } from '@/utils/seo'
 import LoginContainer from './components/LoginContainer'
 
-export const metadata = {
-  title: 'Login',
-}
+export const metadata = mergeMetadataWithDefault({ title: 'Login' })
 
 const LoginPage = () => {
   return (

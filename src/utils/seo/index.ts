@@ -1,0 +1,1 @@
+export { mergeMetadataWithDefault } from './mergeMetadataWithDefault'

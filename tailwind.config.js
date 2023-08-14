@@ -54,9 +54,15 @@ module.exports = {
         4.5: '1.125rem',
       },
       data: {
+        active: 'state="active"',
+        inactive: 'state="inactive"',
         enabled: 'disabled="false"',
         disabled: 'disabled="true"',
         loading: 'loading="true"',
+      },
+      boxShadow: {
+        trialCard:
+          '0 0 0 0 rgba(99, 99, 99, 0.04), 0 2px 4px 0 rgba(99, 99, 99, 0.04), 0 7px 7px 0 rgba(99, 99, 99, 0.03), 0 15px 9px 0 rgba(99, 99, 99, 0.02), 0 26px 10px 0 rgba(99, 99, 99, 0.01), 0 41px 11px 0 rgba(99, 99, 99, 0.00)',
       },
     },
   },

@@ -11,7 +11,7 @@ interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = () => {
   return (
-    <header className="grid h-19 grid-flow-col items-center justify-between border-b border-neutral-100 bg-white px-9">
+    <header className="grid h-19 min-w-[1024px] grid-flow-col items-center justify-between border-b border-neutral-100 bg-white px-9">
       <Image width={81} height={26} src="/img/logo.svg" alt="clio logo" />
 
       <div className="grid grid-flow-col gap-x-9">

@@ -4,12 +4,12 @@ import { FC, createContext, PropsWithChildren, useContext } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import { IUser } from '@/types/api'
-import { QueryKey } from '@/query'
-import { useRequestWithAuthToken } from '@/hooks'
+import { getCurrentUser, QueryKey } from '@/query'
+import { getAuthTokenFromCookies } from '@/utils/cookie'
 
 interface IUserContext extends IUser {}
 
-const defaultValue = {
+const defaultValue: IUser = {
   user_id: '',
   first_name: '',
   last_name: '',
@@ -17,8 +17,11 @@ const defaultValue = {
   phone: null,
   active: false,
   metadata: {},
-  created: '',
-  modified: '',
+  created: null,
+  modified: null,
+  is_patient: false,
+  is_cra: false,
+  is_site_user: false,
 }
 
 const UserContext = createContext<IUserContext>(defaultValue)
@@ -28,11 +31,9 @@ interface UserContextProviderProps extends PropsWithChildren {}
 export const UserContextProvider: FC<UserContextProviderProps> = (props) => {
   const { children } = props
 
-  const { getMe } = useRequestWithAuthToken()
-
   const { data } = useQuery<IUser>({
     queryKey: [QueryKey.ME],
-    queryFn: () => getMe(),
+    queryFn: () => getCurrentUser({ authToken: getAuthTokenFromCookies() }),
   })
 
   return (

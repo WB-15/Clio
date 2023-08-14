@@ -12,10 +12,8 @@ const Layout: FC<LayoutProps> = (props) => {
 
   return (
     <UserContextProvider>
-      <main className="min-w-[1024px]">
-        <Header />
-        {children}
-      </main>
+      <Header />
+      <main className="container min-w-[1024px] pb-28 pt-9">{children}</main>
     </UserContextProvider>
   )
 }

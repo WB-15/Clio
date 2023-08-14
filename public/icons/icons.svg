@@ -20,4 +20,15 @@
   <symbol id="icon-log_out" viewBox="0 0 24 24" fill="none">
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 20H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h4M10 12h10m0 0-4.7-4m4.7 4-4.7 4"/>
   </symbol>
+  <symbol id="icon-plus" viewBox="0 0 24 24" fill="none">
+    <path stroke="currentColor" d="M12.07 19.14v-7.07m0 0V5m0 7.07H5m7.07 0h7.07"/>
+  </symbol>
+  <symbol id="icon-people" viewBox="0 0 24 24" clip-rule="evenodd" fill-rule="evenodd" fill="currentColor">
+    <path d="M17.323 9.824a3.235 3.235 0 1 1-6.47 0 3.235 3.235 0 0 1 6.47 0Zm-1.638 3.924a4.237 4.237 0 0 0-1.597-8.16 4.235 4.235 0 0 0-1.597 8.16 6.848 6.848 0 0 0-4.734 4.041 6.853 6.853 0 0 0-.522 2.623h1a5.853 5.853 0 0 1 11.706 0h1a6.853 6.853 0 0 0-5.256-6.664Z"/>
+    <path d="M5.697 7.393a2.893 2.893 0 0 1 5.152-1.808l.78-.625a3.893 3.893 0 1 0-5.116 5.727A5.591 5.591 0 0 0 3 15.877h1a4.59 4.59 0 0 1 4.59-4.59v-1a2.893 2.893 0 0 1-2.893-2.894Z"/>
+  </symbol>
+  <symbol id="icon-inbox" fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="currentColor" d="M4 17.72a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5.18a1 1 0 0 0-.09-.42l-2.84-6.25a1 1 0 0 0-.91-.59H7.84a1 1 0 0 0-.9.59l-2.85 6.25a1 1 0 0 0-.09.42v5.18Z"/>
+    <path stroke="currentColor" d="M4.64 12.96h3.3a1 1 0 0 1 .84.45l.68 1.02a1 1 0 0 0 .84.45h3.4a1 1 0 0 0 .84-.45l.68-1.02a1 1 0 0 1 .84-.45h3.3"/>
+  </symbol>
 </svg>

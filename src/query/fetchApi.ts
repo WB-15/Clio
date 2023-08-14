@@ -1,11 +1,9 @@
 import { API_ENDPOINT } from '@/constants'
 import { FetchApiOptions } from '@/types'
-import { getAuthTokenFromCookies } from '@/utils/cookie'
 
 //
 // Server or client w/o auth fetch APIs starts here
 //
-
 export const fetchApiNoJson = (
   url: string,
   fetchApiOptions?: FetchApiOptions
@@ -77,21 +75,11 @@ export const fetchApi = <T = any>(
     return res.text() as T
   })
 
+export const getApi = fetchApi
+
 export const postApi = (url: string, fetchApiOptions?: FetchApiOptions) => {
   return fetchApi(url, {
     ...fetchApiOptions,
     method: 'POST',
-  })
-}
-
-export const fetchApiWithToken = (
-  url: string,
-  fetchApiOptions?: FetchApiOptions
-) => {
-  const authToken = getAuthTokenFromCookies()
-
-  return fetchApi(url, {
-    ...fetchApiOptions,
-    authToken,
   })
 }
