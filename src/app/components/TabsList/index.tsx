@@ -5,7 +5,7 @@ import {
   TabsTrigger as RadixTabsTrigger,
 } from '@radix-ui/react-tabs'
 
-import { IUITab } from '@/types'
+import { IUITab } from '@/types/ui'
 
 interface TabsListProps extends ComponentProps<typeof RadixTabsList> {
   tabs: IUITab[]

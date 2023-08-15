@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import clsx from 'clsx'
-import { Icon } from '@/app/components'
+
+import { Icon } from '../Icon'
 
 interface EmptyListProps {
   heading: string
@@ -8,7 +9,7 @@ interface EmptyListProps {
   className?: string
 }
 
-const EmptyList: FC<EmptyListProps> = (props) => {
+export const EmptyList: FC<EmptyListProps> = (props) => {
   const { heading, description, className } = props
 
   return (
@@ -28,5 +29,3 @@ const EmptyList: FC<EmptyListProps> = (props) => {
     </div>
   )
 }
-
-export default EmptyList

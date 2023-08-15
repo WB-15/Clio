@@ -6,11 +6,12 @@ import Trial from './components/Trial'
 
 interface TrialListProps {
   trialList: ITrial[]
+  baseUrl: string
   className?: string
 }
 
-const TrialList: FC<TrialListProps> = (props) => {
-  const { trialList, className } = props
+export const TrialList: FC<TrialListProps> = (props) => {
+  const { trialList, baseUrl, className } = props
 
   return (
     <div
@@ -25,10 +26,9 @@ const TrialList: FC<TrialListProps> = (props) => {
           id={trial_id}
           heading={name}
           patientCount={patient_count}
+          baseUrl={baseUrl}
         />
       ))}
     </div>
   )
 }
-
-export default TrialList

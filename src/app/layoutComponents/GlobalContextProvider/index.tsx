@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
 
 import { CustomQueryClientProvider, queryClient } from '@/query'
+import { UserContextProvider } from '@/app/context'
 
 interface GlobalContextProviderProps extends PropsWithChildren {}
 
@@ -9,7 +10,7 @@ export const GlobalContextProvider = async ({
 }: GlobalContextProviderProps) => {
   return (
     <CustomQueryClientProvider client={queryClient}>
-      {children}
+      <UserContextProvider>{children}</UserContextProvider>
     </CustomQueryClientProvider>
   )
 }

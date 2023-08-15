@@ -27,7 +27,7 @@ const handleProtectedRoute = async (request: NextRequest) => {
 
   switch (true) {
     case currentUser.is_site_user:
-      return handleRedirect(request, RouteURL.SITE)
+      return handleRedirect(request, RouteURL.Site.UPCOMING_VISITS)
 
     case currentUser.is_cra:
       return handleRedirect(request, RouteURL.CRA)
@@ -45,7 +45,7 @@ export const middleware = async (request: NextRequest) => {
 
   if (
     pathname.startsWith(RouteURL.LOGIN) ||
-    pathname.startsWith(RouteURL.SITE) ||
+    pathname.startsWith(RouteURL.Site.UPCOMING_VISITS) ||
     pathname.startsWith(RouteURL.PATIENT) ||
     pathname.startsWith(RouteURL.CRA)
   ) {

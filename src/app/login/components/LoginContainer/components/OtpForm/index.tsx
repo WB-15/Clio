@@ -52,7 +52,7 @@ const OtpForm: FC<OtpFormProps> = (props) => {
       switch (true) {
         case !!response?.token:
           updateAuthTokensCookies(response?.token)
-          router.push(RouteURL.SITE)
+          router.push(RouteURL.Site.UPCOMING_VISITS)
           return
         case !!errorMessage:
           addToastToStack({

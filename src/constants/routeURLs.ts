@@ -9,8 +9,11 @@ export const RouteURLBase = {
 
 export const RouteURL = {
   LOGIN: '/login',
-  SITE: RouteURLBase.SITE,
-  SITE_TRIAL: buildUrl([RouteURLBase.SITE, RouteURLBase.TRIAL]),
+  Site: {
+    UPCOMING_VISITS: RouteURLBase.SITE,
+    TRIALS: buildUrl([RouteURLBase.SITE, '/trials']),
+    TRIAL: buildUrl([RouteURLBase.SITE, RouteURLBase.TRIAL]),
+  },
   PATIENT: RouteURLBase.PATIENT,
   CRA: RouteURLBase.CRA,
 }

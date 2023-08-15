@@ -1,19 +1,19 @@
 import { FC } from 'react'
 import Link from 'next/link'
 
-import { Icon } from '@/app/components'
-import { RouteURL } from '@/constants'
+import { Icon } from '../../../Icon'
 
 interface TrialProps {
   id: string
   heading: string
   patientCount: number
+  baseUrl: string
 }
 
 const Trial: FC<TrialProps> = (props) => {
-  const { id, heading, patientCount } = props
+  const { id, baseUrl, heading, patientCount } = props
 
-  const trialUrl = `${RouteURL.SITE_TRIAL}/${id}`
+  const trialUrl = `${baseUrl}/${id}`
 
   return (
     <Link
