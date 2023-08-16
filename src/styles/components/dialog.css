@@ -1,0 +1,58 @@
+@layer components {
+  .dialog {
+    &-overlay {
+      &[data-state='open'] {
+        animation: fadeIn 150ms ease-out;
+      }
+
+      &[data-state='closed'] {
+        animation: fadeOut 150ms ease-in;
+      }
+    }
+
+    &-content {
+      &:focus-visible {
+        outline: none;
+      }
+
+      &-right,
+      &-center {
+        &[data-state='open'] {
+          animation: fadeIn 150ms ease-out;
+        }
+
+        &[data-state='closed'] {
+          animation: fadeOut 150ms ease-in;
+        }
+      }
+
+      &-right {
+        &[data-state='open'] {
+          .dialog-content-inner {
+            animation: slideLeft 300ms ease-out;
+          }
+        }
+
+        &[data-state='closed'] {
+          .dialog-content-inner {
+            animation: slideRight 150ms ease-in;
+          }
+        }
+      }
+
+      &-center {
+        &[data-state='open'] {
+          .dialog-content-inner {
+            animation: slideDown 300ms ease-out;
+          }
+        }
+
+        &[data-state='closed'] {
+          .dialog-content-inner {
+            animation: slideUp 150ms ease-in;
+          }
+        }
+      }
+    }
+  }
+}

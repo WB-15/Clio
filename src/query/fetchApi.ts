@@ -1,5 +1,6 @@
 import { API_ENDPOINT } from '@/constants'
 import { FetchApiOptions } from '@/types'
+import { ApiResponse } from '@/types/api'
 
 //
 // Server or client w/o auth fetch APIs starts here
@@ -64,21 +65,39 @@ export const fetchApiNoJson = (
   })
 }
 
-export const fetchApi = <T = any>(
+export const fetchApiWithStatusCode = async <T = any>(
   url: string,
   fetchApiOptions?: FetchApiOptions
-) =>
-  fetchApiNoJson(url, fetchApiOptions).then((res) => {
-    const contentType = res.headers.get('content-type')
-    if (contentType && contentType.indexOf('application/json') !== -1)
-      return res.json() as T
-    return res.text() as T
-  })
+) => {
+  try {
+    const response = await fetchApiNoJson(url, fetchApiOptions)
+    const contentType = response.headers.get('content-type')
 
-export const getApi = fetchApi
+    const responseData: T =
+      contentType && contentType.indexOf('application/json') !== -1
+        ? await response.json()
+        : await response.text()
+
+    const apiResponse: ApiResponse<T> = {
+      status: response.status,
+      data: responseData,
+    }
+
+    return apiResponse
+  } catch (error: any) {
+    const apiResponse: ApiResponse<T> = {
+      status: 500,
+      error: error.message || 'An error occurred',
+    }
+
+    return apiResponse
+  }
+}
+
+export const getApi = fetchApiWithStatusCode
 
 export const postApi = (url: string, fetchApiOptions?: FetchApiOptions) => {
-  return fetchApi(url, {
+  return fetchApiWithStatusCode(url, {
     ...fetchApiOptions,
     method: 'POST',
   })

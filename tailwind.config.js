@@ -11,6 +11,7 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
+      black: '#000',
       white: '#fff',
       primary: {
         50: '#B9DFFF',
@@ -43,10 +44,17 @@ module.exports = {
       },
     },
     extend: {
+      width: {
+        4.5: '1.125rem',
+        9.5: '2.375rem',
+      },
       height: {
-        19: '76px',
+        4.5: '1.125rem',
+        19: '4.75rem',
       },
       zIndex: {
+        'dialog-backdrop': 1050,
+        dialog: 1055,
         toast: 1950,
       },
       lineHeight: {
@@ -59,6 +67,10 @@ module.exports = {
         enabled: 'disabled="false"',
         disabled: 'disabled="true"',
         loading: 'loading="true"',
+        open: 'state="open"',
+        closed: 'state="closed"',
+        checked: 'state="checked"',
+        unchecked: 'state="unchecked"',
       },
       boxShadow: {
         trialCard:

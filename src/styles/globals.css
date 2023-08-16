@@ -20,6 +20,10 @@
     }
   }
 
+  hr {
+    color: theme('colors.neutral.200')
+  }
+
   /* Firefox */
   input[type='number'] {
     -moz-appearance: textfield;

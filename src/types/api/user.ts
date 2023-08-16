@@ -1,5 +1,10 @@
 interface IMetadata {}
 
+export interface IUserWithToken {
+  token: string
+  user: IUser
+}
+
 export interface IUser {
   user_id: string
   first_name: string

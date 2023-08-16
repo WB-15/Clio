@@ -47,11 +47,12 @@ const OtpForm: FC<OtpFormProps> = (props) => {
 
   const onSubmit = (formData: FormType) => {
     mutateUserAuth({ email, code: formData.otpCode || '' }).then((response) => {
-      const errorMessage = parseError(response)
+      const { data } = response
+      const errorMessage = parseError(data)
 
       switch (true) {
-        case !!response?.token:
-          updateAuthTokensCookies(response?.token)
+        case !!data?.token:
+          updateAuthTokensCookies(data?.token)
           router.push(RouteURL.Site.UPCOMING_VISITS)
           return
         case !!errorMessage:

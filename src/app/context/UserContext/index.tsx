@@ -3,7 +3,7 @@
 import { FC, createContext, PropsWithChildren, useContext } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
-import { IUser } from '@/types/api'
+import { ApiResponse, IUser } from '@/types/api'
 import { getCurrentUser, QueryKey } from '@/query'
 import { getAuthTokenFromCookies } from '@/utils/cookie'
 
@@ -31,13 +31,13 @@ interface UserContextProviderProps extends PropsWithChildren {}
 export const UserContextProvider: FC<UserContextProviderProps> = (props) => {
   const { children } = props
 
-  const { data } = useQuery<IUser>({
+  const { data } = useQuery<ApiResponse<IUser>>({
     queryKey: [QueryKey.ME],
     queryFn: () => getCurrentUser({ authToken: getAuthTokenFromCookies() }),
   })
 
   return (
-    <UserContext.Provider value={data || defaultValue}>
+    <UserContext.Provider value={data?.data || defaultValue}>
       {children}
     </UserContext.Provider>
   )

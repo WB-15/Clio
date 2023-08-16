@@ -1,3 +1,5 @@
 export { WrappedInput } from './WrappedInput'
 export { InputLabel } from './InputLabel'
+export { WrappedSwitch } from './WrappedSwitch'
 export { OptionalErrorMessage } from './OptionalErrorMessage'
+export { WrappedCheckbox } from './WrappedCheckbox'

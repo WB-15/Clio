@@ -12,7 +12,7 @@ export const metadata = mergeMetadataWithDefault({ title: 'Trials' })
 const TabTrials = async () => {
   const authToken = getAuthTokenFromServerComponent()
 
-  const trialList = await getTrialList<ITrial[]>({
+  const { data: trialList } = await getTrialList<ITrial[]>({
     authToken,
     options: { cache: 'no-cache' },
   })

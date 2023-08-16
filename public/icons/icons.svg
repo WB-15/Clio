@@ -31,4 +31,12 @@
     <path stroke="currentColor" d="M4 17.72a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5.18a1 1 0 0 0-.09-.42l-2.84-6.25a1 1 0 0 0-.91-.59H7.84a1 1 0 0 0-.9.59l-2.85 6.25a1 1 0 0 0-.09.42v5.18Z"/>
     <path stroke="currentColor" d="M4.64 12.96h3.3a1 1 0 0 1 .84.45l.68 1.02a1 1 0 0 0 .84.45h3.4a1 1 0 0 0 .84-.45l.68-1.02a1 1 0 0 1 .84-.45h3.3"/>
   </symbol>
+  <symbol id="icon-chevron_down" viewBox="0 0 24 24" fill="none">
+    <path stroke="currentColor" d="m6 9 6 6 6-6"/>
+  </symbol>
+  <symbol id="icon-more" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="6" cy="12" r="1.5"/>
+    <circle cx="12" cy="12" r="1.5"/>
+    <circle cx="18" cy="12" r="1.5"/>
+  </symbol>
 </svg>

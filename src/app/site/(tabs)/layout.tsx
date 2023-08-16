@@ -1,11 +1,13 @@
 import { FC, ReactNode } from 'react'
 
-import { PageHeader, TabNavLinksList } from '@/app/components'
+import { TabNavLinksList } from '@/app/components'
 import { RouteURL } from '@/constants'
 import { getTrialList } from '@/query'
 import { ITrial } from '@/types/api'
 import { ITabNavLink } from '@/types/ui'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
+
+import SitePageHeader from './components/SitePageHeader'
 
 interface LayoutProps {
   children: ReactNode
@@ -16,7 +18,7 @@ const Layout: FC<LayoutProps> = async (props) => {
 
   const authToken = getAuthTokenFromServerComponent()
 
-  const trialList = await getTrialList<ITrial[]>({
+  const { data: trialList } = await getTrialList<ITrial[]>({
     authToken,
     options: { cache: 'no-cache' },
   })
@@ -28,7 +30,7 @@ const Layout: FC<LayoutProps> = async (props) => {
       prefetch: false,
     },
     {
-      name: trialList.length ? `Trials (${trialList.length})` : 'Trials',
+      name: trialList?.length ? `Trials (${trialList?.length})` : 'Trials',
       url: RouteURL.Site.TRIALS,
       prefetch: false,
     },
@@ -36,7 +38,7 @@ const Layout: FC<LayoutProps> = async (props) => {
 
   return (
     <main className="container min-w-[1024px] pb-28 pt-9">
-      <PageHeader heading="Dashboard" />
+      <SitePageHeader heading="Dashboard" />
       <TabNavLinksList navLinks={SITE_SUBPAGES} className="mt-6" />
       {children}
     </main>

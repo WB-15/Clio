@@ -10,6 +10,7 @@ interface WrappedInputProps extends ComponentPropsWithoutRef<'input'> {
   classNameWrapper?: string
   errors?: any
   isErrorStyleForced?: boolean
+  absoluteError?: boolean
 }
 
 export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
@@ -24,6 +25,7 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
       classNameWrapper,
       errors,
       isErrorStyleForced,
+      absoluteError = false,
       ...rest
     } = props
 
@@ -34,7 +36,13 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
     const isErrorStyleActive = fieldErrorMessage || isErrorStyleForced
 
     return (
-      <div className={clsx('relative grid min-w-0 pb-[26px]', classNameGroup)}>
+      <div
+        className={clsx(
+          'relative grid min-w-0',
+          { 'pb-[26px]': absoluteError },
+          classNameGroup
+        )}
+      >
         {!!labelContent && <InputLabel htmlFor={id}>{labelContent}</InputLabel>}
         <div className={clsx('relative grid min-w-0', classNameWrapper)}>
           <input
@@ -60,7 +68,9 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
           </span>
         </div>
         <OptionalErrorMessage
-          className="absolute bottom-0 left-0 mt-1.5"
+          className={clsx('mt-1.5', {
+            'absolute bottom-0 left-0 ': absoluteError,
+          })}
           errorText={fieldErrorMessage}
         />
       </div>

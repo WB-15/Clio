@@ -1,4 +1,22 @@
 @layer utilities {
+  @keyframes accordionOpen {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordionClose {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
   @keyframes slideLeft {
     from {
       transform: translateX(32px);
@@ -22,6 +40,60 @@
     }
     to {
       transform: translateX(calc(100% + 16px));
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-50px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50px);
+    }
+  }
+
+  @keyframes slideLeft {
+    from {
+      transform: translateX(50px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideRight {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(50px);
     }
   }
 

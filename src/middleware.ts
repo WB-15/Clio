@@ -16,14 +16,19 @@ const handleRedirect = (request: NextRequest, redirectUrl: string) => {
 }
 
 const handleProtectedRoute = async (request: NextRequest) => {
-  const authToken: string | null = jsonParseSafe(
+  const authToken = jsonParseSafe(
     request.cookies.get(CookieKey.AUTH_TOKEN)?.value,
     null
   )
 
   if (!authToken) return handleRedirect(request, RouteURL.LOGIN)
 
-  const currentUser = await getCurrentUser<IUser>({ authToken })
+  const { data: currentUser, status } = await getCurrentUser<IUser>({
+    authToken,
+  })
+
+  if (status === 401 || !currentUser)
+    return handleRedirect(request, RouteURL.LOGIN)
 
   switch (true) {
     case currentUser.is_site_user:

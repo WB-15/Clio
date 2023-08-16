@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Button, Icon } from '@/app/components'
 import { removeAuthTokensCookies } from '@/utils/cookie'
 import { RouteURL } from '@/constants'
+import { queryClient } from '@/query'
 
 interface LogOutButtonProps {}
 
@@ -14,6 +15,7 @@ const LogOutButton: FC<LogOutButtonProps> = () => {
 
   const handleLogOut = () => {
     removeAuthTokensCookies()
+    queryClient.invalidateQueries()
     router.push(RouteURL.LOGIN)
   }
 

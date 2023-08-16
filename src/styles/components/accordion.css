@@ -1,0 +1,13 @@
+@layer components {
+  .accordion {
+    &-content {
+      &[data-state='open'] {
+        animation: accordionOpen 300ms ease-out;
+      }
+
+      &[data-state='closed'] {
+        animation: accordionClose 300ms ease-in;
+      }
+    }
+  }
+}

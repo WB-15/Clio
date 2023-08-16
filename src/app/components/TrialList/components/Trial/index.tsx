@@ -20,7 +20,7 @@ const Trial: FC<TrialProps> = (props) => {
       href={trialUrl}
       className="flex flex-col rounded-xl border border-neutral-100 bg-white p-4 duration-300 ease-in-out hocus:shadow-trialCard"
     >
-      <h2 className="flex-grow text-lg font-medium text-neutral-900">
+      <h2 className="line-clamp-2 flex-grow text-lg font-medium text-neutral-900">
         {heading}
       </h2>
       <div className="mt-1 text-xs text-neutral-400">{id}</div>

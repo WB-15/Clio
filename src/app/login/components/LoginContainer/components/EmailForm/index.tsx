@@ -43,10 +43,11 @@ const EmailForm: FC<LoginFormProps> = (props) => {
 
   const onSubmit = (formData: FormType) => {
     mutateUserAuth({ email: formData.email }).then((response) => {
-      const errorMessage = parseError(response)
+      const { data, status } = response
+      const errorMessage = parseError(data)
 
       switch (true) {
-        case response === 'OK':
+        case status === 200:
           handleUserEmail(formData.email)
           handleNextStep()
           return
@@ -83,6 +84,7 @@ const EmailForm: FC<LoginFormProps> = (props) => {
         placeholder="Enter your email or mobile"
         classNameGroup="mt-8"
         errors={errors}
+        absoluteError
         {...register('email')}
       />
 
