@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useId } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, ReactNode, useId } from 'react'
 import clsx from 'clsx'
 
 import { InputLabel } from '../InputLabel'
@@ -11,6 +11,8 @@ interface WrappedInputProps extends ComponentPropsWithoutRef<'input'> {
   errors?: any
   isErrorStyleForced?: boolean
   absoluteError?: boolean
+  iconSlotLeft?: ReactNode
+  iconSlotRight?: ReactNode
 }
 
 export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
@@ -26,6 +28,8 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
       errors,
       isErrorStyleForced,
       absoluteError = false,
+      iconSlotLeft,
+      iconSlotRight,
       ...rest
     } = props
 
@@ -55,7 +59,13 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
               'peer min-w-0 rounded-lg border px-2.5 py-1.5 duration-300 ease-out placeholder:opacity-0',
               isErrorStyleActive
                 ? 'border-red-600'
-                : 'border-neutral-200 hover:border-neutral-400 focus:border-primary-500'
+                : 'border-neutral-200 hover:border-neutral-400 focus:border-primary-500',
+              {
+                'pl-4': !iconSlotLeft,
+                'pr-4': !iconSlotRight,
+                'pl-11': iconSlotLeft,
+                'pr-11': iconSlotRight,
+              }
             )}
             {...rest}
           />
@@ -66,6 +76,18 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
           >
             {placeholder}
           </span>
+
+          {iconSlotLeft && (
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2">
+              {iconSlotLeft}
+            </span>
+          )}
+
+          {iconSlotRight && (
+            <span className="absolute right-3.5 top-1/2 -translate-y-1/2">
+              {iconSlotRight}
+            </span>
+          )}
         </div>
         <OptionalErrorMessage
           className={clsx('mt-1.5', {

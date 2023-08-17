@@ -25,6 +25,6 @@
   }
 
   ::selection {
-    background: theme('colors.primary.DEFAULT / 30%');
+    background: theme('colors.primary.500 / 30%');
   }
 }

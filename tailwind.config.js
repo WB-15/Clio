@@ -55,6 +55,7 @@ module.exports = {
       zIndex: {
         'dialog-backdrop': 1050,
         dialog: 1055,
+        tooltip: 1080,
         toast: 1950,
       },
       lineHeight: {

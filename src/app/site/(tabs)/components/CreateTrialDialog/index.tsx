@@ -2,7 +2,11 @@
 
 import React, { FC } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
+import { createTrialSchema } from '@/utils/zod'
 import { Button, Icon } from '@/app/components'
 import {
   DialogOverlay,
@@ -15,6 +19,15 @@ import CreateTrialForm from './components/CreateTrialForm'
 interface CreateTrialDialogProps {}
 
 const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
+  type FormType = z.input<typeof createTrialSchema>
+
+  const { register, control, handleSubmit, watch } = useForm<FormType>({
+    resolver: zodResolver(createTrialSchema),
+    defaultValues: {
+      visit_windows: [{}],
+    },
+  })
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -33,8 +46,12 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
             onInteractOutside={(e) => e.preventDefault()}
           >
             <DialogHeader>Create Trial</DialogHeader>
-            <div className="hide-scrollbar flex-grow overflow-auto p-6">
-              <CreateTrialForm />
+            <div className="hide-scrollbar flex-grow overflow-auto py-6">
+              <CreateTrialForm
+                register={register}
+                control={control}
+                watch={watch}
+              />
             </div>
             <DialogFooter
               buttonSlotSecondary={
@@ -42,7 +59,15 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
                   <Button variant="outline">Cancel</Button>
                 </Dialog.Close>
               }
-              buttonSlotPrimary={<Button variant="primary">Confirm</Button>}
+              buttonSlotPrimary={
+                <Button
+                  type="submit"
+                  variant="primary"
+                  onClick={handleSubmit((data) => console.log(data))}
+                >
+                  Confirm
+                </Button>
+              }
             />
           </DialogContent>
         </DialogOverlay>

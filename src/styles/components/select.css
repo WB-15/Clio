@@ -1,0 +1,21 @@
+@layer components {
+  .select {
+    &-menu {
+      box-shadow: 0 0 0 0 rgba(64, 64, 64, 0.05), 2px 2px 7px 0 rgba(64, 64, 64, 0.04), 9px 8px 12px 0 rgba(64, 64, 64, 0.04), 21px 18px 17px 0 rgba(64, 64, 64, 0.02), 38px 33px 20px 0 rgba(64, 64, 64, 0.01), 59px 51px 22px 0 rgba(64, 64, 64, 0.00);
+    }
+
+    &-menu-list {
+      scrollbar-color: theme('colors.neutral.400') transparent;
+
+      &::-webkit-scrollbar-track {
+        background: theme('colors.neutral.400');
+      }
+    }
+
+    &-indicators-container {
+      transition:
+        color ease-out 300ms,
+        transform ease-out 150ms;
+    }
+  }
+}

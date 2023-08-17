@@ -1,0 +1,19 @@
+@layer components {
+  .tooltip {
+    &-content {
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.03), 0 3px 7px 0 rgba(0, 0, 0, 0.03), 0 13px 13px 0 rgba(0, 0, 0, 0.03), 0 29px 17px 0 rgba(0, 0, 0, 0.01), 0 52px 21px 0 rgba(0, 0, 0, 0.00), 0 80px 23px 0 rgba(0, 0, 0, 0.00);
+
+      &[data-state='delayed-open'] {
+        &[data-side='right'] {
+            animation: slideLeftAndFade ease-in-out 300ms;
+        }
+      }
+
+      &[data-state='closed'] {
+        &[data-side='right'] {
+          animation: slideRightAndHide ease-in-out 150ms;
+        }
+      }
+    }
+  }
+}

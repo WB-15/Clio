@@ -39,4 +39,11 @@
     <circle cx="12" cy="12" r="1.5"/>
     <circle cx="18" cy="12" r="1.5"/>
   </symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24" fill="none">
+    <circle cx="12" cy="12" r="7.5" stroke="currentColor"/>
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M11.5 8v5l3 2.5"/>
+  </symbol>
+  <symbol id="icon-question" viewBox="0 0 24 24" fill="none">
+    <path fill="currentColor" fill-rule="evenodd" d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8.95-4.32a2.57 2.57 0 0 1 2.71.52 2.4 2.4 0 0 1 .55 2.66c-.2.44-.52.82-.93 1.08l-.02.01c-.25.16-.47.34-.63.53a.82.82 0 0 0-.23.52.5.5 0 0 1-1 0c0-.47.2-.87.46-1.17.26-.3.58-.54.87-.72h.01c.25-.17.44-.4.55-.65a1.35 1.35 0 0 0-.32-1.54c-.21-.2-.48-.34-.77-.4-.3-.05-.6-.02-.88.1-.28.1-.51.29-.67.52-.16.23-.25.5-.25.78a.5.5 0 0 1-1 0c0-.48.15-.95.43-1.35.27-.4.67-.7 1.12-.89ZM12 16.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd"/>
+  </symbol>
 </svg>
