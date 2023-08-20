@@ -20,7 +20,7 @@ const Layout: FC<LayoutProps> = async (props) => {
 
   const { data: trialList } = await getTrialList<ITrial[]>({
     authToken,
-    options: { cache: 'no-cache' },
+    options: { next: { revalidate: 60 * 15, tags: ['trials'] } },
   })
 
   const SITE_SUBPAGES: ITabNavLink[] = [

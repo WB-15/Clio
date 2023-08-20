@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -8,17 +8,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { createTrialSchema } from '@/utils/zod'
 import { Button, Icon } from '@/app/components'
+import { actionCreateTrial } from '@/query'
 import {
   DialogOverlay,
   DialogContent,
   DialogHeader,
   DialogFooter,
 } from '@/app/components/dialog'
+import { addToastToStack, parseError } from '@/utils'
 import CreateTrialForm from './components/CreateTrialForm'
 
 interface CreateTrialDialogProps {}
 
 const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   type FormType = z.input<typeof createTrialSchema>
 
   const {
@@ -31,13 +34,34 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
   } = useForm<FormType>({
     resolver: zodResolver(createTrialSchema),
     defaultValues: {
-      name: '',
       visit_windows: [{}],
     },
   })
 
+  const handleSubmitForm = (data: FormType) => {
+    actionCreateTrial(data).then((res) => {
+      if (res.status >= 200 && res.status <= 299) {
+        addToastToStack({
+          variant: 'success',
+          title: 'Success',
+          description: 'New trial successfully added!',
+        })
+
+        setIsCreateDialogOpen(false)
+      }
+
+      if (res.status >= 400 && res.status <= 499) {
+        addToastToStack({
+          variant: 'danger',
+          title: 'Error',
+          description: parseError(res.data),
+        })
+      }
+    })
+  }
+
   return (
-    <Dialog.Root>
+    <Dialog.Root open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
       <Dialog.Trigger asChild>
         <Button
           variant="primary"
@@ -73,7 +97,7 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
                 <Button
                   type="submit"
                   variant="primary"
-                  onClick={handleSubmit((data) => console.log(data))}
+                  onClick={handleSubmit((data) => handleSubmitForm(data))}
                 >
                   Confirm
                 </Button>

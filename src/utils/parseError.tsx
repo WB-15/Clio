@@ -7,5 +7,11 @@ export const parseError = (response: any) => {
     ? response[0]?.errors?.issues?.[0]?.message
     : null
 
-  return backendError || zodError || null
+  const zodPath = Array.isArray(response)
+    ? response[0]?.errors?.issues?.[0]?.path?.[0] || ''
+    : ''
+
+  const zodFullError = `${zodError} ${zodPath}`
+
+  return backendError || zodFullError || null
 }

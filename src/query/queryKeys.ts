@@ -1,9 +1,10 @@
 import { buildUrl } from '@/utils'
 
-const QueryKeyBase = {
+export const QueryKeyBase = {
   AUTH: '/auth',
   USER: '/user',
   SITE: '/site/site_pcDyVS7XKSfx',
+  TRIAL: '/trial',
 }
 
 export const QueryKey = {

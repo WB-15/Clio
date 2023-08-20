@@ -1,10 +1,5 @@
 interface IMetadata {}
 
-export interface IUserWithToken {
-  token: string
-  user: IUser
-}
-
 export interface IUser {
   user_id: string
   first_name: string
@@ -18,4 +13,8 @@ export interface IUser {
   is_site_user: boolean
   is_patient: boolean
   is_cra: boolean
+}
+
+export interface IUserWithToken extends IUser {
+  token: string
 }

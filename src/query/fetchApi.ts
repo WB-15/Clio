@@ -96,8 +96,8 @@ export const fetchApiWithStatusCode = async <T = any>(
 
 export const getApi = fetchApiWithStatusCode
 
-export const postApi = (url: string, fetchApiOptions?: FetchApiOptions) => {
-  return fetchApiWithStatusCode(url, {
+export const postApi = <T>(url: string, fetchApiOptions?: FetchApiOptions) => {
+  return fetchApiWithStatusCode<T>(url, {
     ...fetchApiOptions,
     method: 'POST',
   })

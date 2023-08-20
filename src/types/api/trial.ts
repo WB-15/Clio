@@ -1,4 +1,4 @@
-export interface ITrial {
+export interface ITrialBase {
   trial_id: string
   name: string
   site_id: string
@@ -7,5 +7,8 @@ export interface ITrial {
   contact_user_id: string | null
   created: string
   modified: Date
+}
+
+export interface ITrial extends ITrialBase {
   patient_count: number
 }

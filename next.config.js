@@ -7,6 +7,7 @@ const nextConfig = withBundleAnalyzer({
   reactStrictMode: true,
   experimental: {
     appDir: true,
+    serverActions: true,
   },
   images: {
     formats: ['image/avif', 'image/webp'],

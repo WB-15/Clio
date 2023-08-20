@@ -46,8 +46,12 @@ const OtpForm: FC<OtpFormProps> = (props) => {
   })
 
   const onSubmit = (formData: FormType) => {
-    mutateUserAuth({ email, code: formData.otpCode || '' }).then((response) => {
-      const { data } = response
+    mutateUserAuth({
+      email,
+      code: formData.otpCode || '',
+    }).then((response) => {
+      // TODO: remove any
+      const { data } = response as any
       const errorMessage = parseError(data)
 
       switch (true) {
