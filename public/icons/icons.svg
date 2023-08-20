@@ -46,4 +46,11 @@
   <symbol id="icon-question" viewBox="0 0 24 24" fill="none">
     <path fill="currentColor" fill-rule="evenodd" d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8.95-4.32a2.57 2.57 0 0 1 2.71.52 2.4 2.4 0 0 1 .55 2.66c-.2.44-.52.82-.93 1.08l-.02.01c-.25.16-.47.34-.63.53a.82.82 0 0 0-.23.52.5.5 0 0 1-1 0c0-.47.2-.87.46-1.17.26-.3.58-.54.87-.72h.01c.25-.17.44-.4.55-.65a1.35 1.35 0 0 0-.32-1.54c-.21-.2-.48-.34-.77-.4-.3-.05-.6-.02-.88.1-.28.1-.51.29-.67.52-.16.23-.25.5-.25.78a.5.5 0 0 1-1 0c0-.48.15-.95.43-1.35.27-.4.67-.7 1.12-.89ZM12 16.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd"/>
   </symbol>
+  <symbol id="icon-delete" viewBox="0 0 24 24" fill="none">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m17.9 7.56-.72 10.58a2 2 0 0 1-2 1.86H8.82a2 2 0 0 1-2-1.86L6.11 7.56m11.78 0H20m-2.1 0h-2.95m-8.84 0H4m2.1 0h2.95m0 0h5.9m-5.9 0h5.9m-5.9 0V6c0-1.1.9-2 2-2h1.9a2 2 0 0 1 2 2v1.56m-4.63 3.1v6.67m3.36-6.66v6.66"/>
+  </symbol>
+  <symbol id="icon-duplicate" viewBox="0 0 24 24" fill="none">
+    <path stroke="currentColor" d="M16 6.1V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h.1"/>
+    <rect width="11" height="11" x="8.5" y="8.5" stroke="currentColor" rx="1.5"/>
+  </symbol>
 </svg>

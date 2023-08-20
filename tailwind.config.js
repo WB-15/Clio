@@ -53,6 +53,7 @@ module.exports = {
         19: '4.75rem',
       },
       zIndex: {
+        dropdown: 1000,
         'dialog-backdrop': 1050,
         dialog: 1055,
         tooltip: 1080,

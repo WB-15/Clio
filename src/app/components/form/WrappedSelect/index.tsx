@@ -10,9 +10,12 @@ import clsx from 'clsx'
 
 import { Icon } from '@/app/components'
 import { InputLabel } from '../InputLabel'
+import { OptionalErrorMessage } from '../OptionalErrorMessage'
 
 interface WrappedSelectProps extends ComponentProps<typeof Select> {
   labelContent?: ReactNode
+  errorMessage?: string
+  errors?: any
 }
 
 const DropdownIndicator = (props: DropdownIndicatorProps<any>) => (
@@ -35,10 +38,13 @@ const Option = (props: OptionProps<any>) => {
 }
 
 export const WrappedSelect: FC<WrappedSelectProps> = (props) => {
-  const { labelContent, className, ...rest } = props
+  const { labelContent, errorMessage, name, errors, className, ...rest } = props
 
   const instanceId = `react-select-instance-${useId()}`
   const inputId = `react-select-input-${useId()}`
+
+  const fieldErrorMessage =
+    errorMessage || (name ? errors?.[name]?.message : null)
 
   return (
     <div className={className}>
@@ -52,7 +58,10 @@ export const WrappedSelect: FC<WrappedSelectProps> = (props) => {
           control: ({ isFocused }) =>
             clsx(
               'rounded-lg border px-2.5 py-2 text-sm text-neutral-900 !duration-300 ease-in-out',
-              isFocused
+              // eslint-disable-next-line no-nested-ternary
+              fieldErrorMessage
+                ? 'border-red-600'
+                : isFocused
                 ? 'border-primary-500'
                 : 'border-neutral-200 hover:border-neutral-400'
             ),
@@ -69,6 +78,7 @@ export const WrappedSelect: FC<WrappedSelectProps> = (props) => {
         }}
         unstyled
       />
+      <OptionalErrorMessage className="mt-1.5" errorText={fieldErrorMessage} />
     </div>
   )
 }

@@ -1,59 +1,68 @@
-import { FC, useState } from 'react'
-import { Control, UseFormRegister } from 'react-hook-form'
+import { FC } from 'react'
+import { Control, UseFormRegister, UseFormWatch } from 'react-hook-form'
 import { z } from 'zod'
 
 import {
   WrappedInput,
-  WrappedSwitch,
   ControlledCheckbox,
   ControlledSelect,
+  ControlledSwitch,
 } from '@/app/components/form'
 import { Icon, Tooltip } from '@/app/components'
 import { createTrialSchema } from '@/utils/zod'
+import { TYPE_OF_VISITS } from '@/constants'
 
 interface WindowDetailsProps {
   control: Control<any>
   register: UseFormRegister<z.input<typeof createTrialSchema>>
+  watch: UseFormWatch<z.input<typeof createTrialSchema>>
   index: number
+  errors: any
 }
 
-const TYPE_OF_VISITS = [
-  { label: 'On-site', value: 'on-site' },
-  { label: 'Remote', value: 'remote' },
-]
-
 const WindowDetails: FC<WindowDetailsProps> = (props) => {
-  const { index, control, register } = props
-  const [isSeparateWindow, setIsSeparateWindow] = useState(false)
+  const { index, control, register, watch, errors } = props
+
+  const isVisitWindowSeparate = watch(
+    `visit_windows.${index}.separate_visit_window`
+  )
 
   return (
     <div className="grid gap-4">
       <WrappedInput
         placeholder="Enter visit name"
         labelContent="Visit name"
+        errorMessage={errors.visit_windows?.[index]?.name?.message}
         {...register(`visit_windows.${index}.name`)}
       />
       <WrappedInput
         placeholder="Enter visit day"
         labelContent="Day"
+        errorMessage={errors.visit_windows?.[index]?.visit_day?.message}
         {...register(`visit_windows.${index}.visit_day`)}
       />
       <hr />
-      <WrappedSwitch
+      <ControlledSwitch
+        name={`visit_windows.${index}.separate_visit_window`}
+        control={control}
         labelHeading="Separate before and after windows"
-        checked={isSeparateWindow}
-        onCheckedChange={setIsSeparateWindow}
       />
-      {isSeparateWindow ? (
+      {isVisitWindowSeparate ? (
         <div className="grid grid-cols-2 gap-3">
           <WrappedInput
             placeholder="Enter window before"
             labelContent="Window before"
+            errorMessage={
+              errors.visit_windows?.[index]?.window_before_days?.message
+            }
             {...register(`visit_windows.${index}.window_before_days`)}
           />
           <WrappedInput
             placeholder="Enter window after"
             labelContent="Window after"
+            errorMessage={
+              errors.visit_windows?.[index]?.window_after_days?.message
+            }
             {...register(`visit_windows.${index}.window_after_days`)}
           />
         </div>
@@ -61,6 +70,8 @@ const WindowDetails: FC<WindowDetailsProps> = (props) => {
         <WrappedInput
           placeholder="Enter window buffer +/- days"
           labelContent="Window buffer +/- days"
+          errorMessage={errors.visit_windows?.[index]?.window_buffer?.message}
+          {...register(`visit_windows.${index}.window_buffer`)}
         />
       )}
       <hr />
@@ -70,11 +81,13 @@ const WindowDetails: FC<WindowDetailsProps> = (props) => {
         labelContent="Type of visit"
         options={TYPE_OF_VISITS}
         placeholder="Select type of visit"
+        errorMessage={errors.visit_windows?.[index]?.visit_type?.message}
       />
       <WrappedInput
         placeholder="Enter visit duration"
         labelContent="Duration"
         iconSlotRight={<Icon name="icon-clock" size={20} />}
+        errorMessage={errors.visit_windows?.[index]?.duration_minutes?.message}
         {...register(`visit_windows.${index}.duration_minutes`)}
       />
       <Tooltip tooltipContent="Fasting means refraining from eating for the past x hours.">

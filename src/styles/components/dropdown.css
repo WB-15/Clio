@@ -1,0 +1,13 @@
+@layer components {
+  .dropdown {
+    &-menu {
+      &[data-state='open'] {
+        animation: fadeIn 75ms ease-out;
+      }
+
+      &[data-state='closed'] {
+        animation: fadeOut 75ms ease-in;
+      }
+    }
+  }
+}

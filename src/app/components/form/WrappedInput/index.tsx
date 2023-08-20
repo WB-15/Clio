@@ -9,6 +9,7 @@ interface WrappedInputProps extends ComponentPropsWithoutRef<'input'> {
   classNameGroup?: string
   classNameWrapper?: string
   errors?: any
+  errorMessage?: string
   isErrorStyleForced?: boolean
   absoluteError?: boolean
   iconSlotLeft?: ReactNode
@@ -26,6 +27,7 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
       classNameGroup,
       classNameWrapper,
       errors,
+      errorMessage,
       isErrorStyleForced,
       absoluteError = false,
       iconSlotLeft,
@@ -36,7 +38,8 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
     const fallbackId = useId()
     const id = idProp || `input-${fallbackId}`
 
-    const fieldErrorMessage = name ? errors?.[name]?.message : null
+    const fieldErrorMessage =
+      errorMessage || (name ? errors?.[name]?.message : null)
     const isErrorStyleActive = fieldErrorMessage || isErrorStyleForced
 
     return (

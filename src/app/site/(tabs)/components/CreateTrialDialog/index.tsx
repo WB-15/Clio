@@ -21,9 +21,17 @@ interface CreateTrialDialogProps {}
 const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
   type FormType = z.input<typeof createTrialSchema>
 
-  const { register, control, handleSubmit, watch } = useForm<FormType>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    watch,
+  } = useForm<FormType>({
     resolver: zodResolver(createTrialSchema),
     defaultValues: {
+      name: '',
       visit_windows: [{}],
     },
   })
@@ -51,6 +59,8 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
                 register={register}
                 control={control}
                 watch={watch}
+                getValues={getValues}
+                errors={errors}
               />
             </div>
             <DialogFooter

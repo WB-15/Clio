@@ -7,6 +7,9 @@ import {
 } from '@radix-ui/react-accordion'
 import clsx from 'clsx'
 
+import { CustomDropdown } from '@/app/components/dropdown'
+import { CustomDropdownProps } from '@/types'
+
 import { Badge } from '../Badge'
 import { Icon } from '../Icon'
 
@@ -15,6 +18,7 @@ interface AccordionItemProps extends ComponentProps<typeof RadixAccordionItem> {
   headerClassName?: string
   contentClassName?: string
   badges?: { key: string; value: ReactNode }[]
+  dropdownProps?: CustomDropdownProps
 }
 
 export const AccordionItem: FC<AccordionItemProps> = (props) => {
@@ -24,6 +28,7 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
     contentClassName,
     headerClassName,
     badges,
+    dropdownProps,
     className,
     ...rest
   } = props
@@ -33,9 +38,9 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
       className={clsx('border-b border-neutral-200', className)}
     >
       <RadixAccordionHeader asChild className={headerClassName}>
-        <h4>
-          <RadixAccordionTrigger className="group flex w-full grid-flow-col items-center gap-6 pb-4 text-sm font-medium">
-            <span className="flex-grow text-start">{triggerChildren}</span>
+        <h4 className="flex">
+          <RadixAccordionTrigger className="group flex w-full items-center justify-between gap-3 pb-4 pr-5 text-sm font-medium">
+            <span>{triggerChildren}</span>
 
             {badges && (
               <div className="flex gap-3">
@@ -44,15 +49,14 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
                 ))}
               </div>
             )}
-
-            <div className="flex gap-2">
-              <Icon name="icon-more" size={24} />
-              <Icon
-                name="icon-chevron_down"
-                size={24}
-                className="group-data-open:rotate-x-180 duration-300 ease-in-out"
-              />
-            </div>
+          </RadixAccordionTrigger>
+          {dropdownProps && <CustomDropdown {...dropdownProps} />}
+          <RadixAccordionTrigger className="group pb-4 pl-1">
+            <Icon
+              name="icon-chevron_down"
+              size={24}
+              className="group-data-open:rotate-x-180 duration-300 ease-in-out"
+            />
           </RadixAccordionTrigger>
         </h4>
       </RadixAccordionHeader>

@@ -8,12 +8,13 @@ import { WrappedSelect } from '../WrappedSelect'
 type ControlledSelectProps = ComponentProps<typeof WrappedSelect> & {
   name: string
   control: Control<any>
+  errorMessage?: string
 }
 
 export const ControlledSelect: FC<ControlledSelectProps> = (props) => {
-  const { control, name, ...rest } = props
+  const { control, name, errorMessage, ...rest } = props
 
-  const { field } = useController<Record<string, any>>({
+  const { field, fieldState } = useController<Record<string, any>>({
     control,
     name,
   })
@@ -24,8 +25,9 @@ export const ControlledSelect: FC<ControlledSelectProps> = (props) => {
       name={field.name}
       onChange={(newValue) => field.onChange(newValue)}
       onBlur={field.onBlur}
-      // error={fieldState.error}
+      errors={fieldState.error}
       value={field.value}
+      errorMessage={errorMessage}
     />
   )
 }
