@@ -2,15 +2,19 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-import { CookieKey, RouteURL } from '@/constants'
+import { CookieKey, RouteURL, RouteURLBase } from '@/constants'
 import { jsonParseSafe } from '@/utils'
 import { getCurrentUser } from '@/query'
 import { IUser } from '@/types/api'
 
-const handleRedirect = (request: NextRequest, redirectUrl: string) => {
+const handleRedirect = (
+  request: NextRequest,
+  redirectUrl: string,
+  baseUrl?: string
+) => {
   const { pathname } = request.nextUrl
 
-  return pathname.startsWith(redirectUrl)
+  return pathname.startsWith(baseUrl || redirectUrl)
     ? NextResponse.next()
     : NextResponse.redirect(new URL(redirectUrl, request.url))
 }
@@ -32,13 +36,21 @@ const handleProtectedRoute = async (request: NextRequest) => {
 
   switch (true) {
     case currentUser.is_site_user:
-      return handleRedirect(request, RouteURL.Site.UPCOMING_VISITS)
+      return handleRedirect(
+        request,
+        RouteURL.Site.UPCOMING_VISITS,
+        RouteURLBase.SITE
+      )
 
     case currentUser.is_cra:
-      return handleRedirect(request, RouteURL.CRA)
+      return handleRedirect(request, RouteURL.Cra.TRIALS, RouteURLBase.CRA)
 
     case currentUser.is_patient:
-      return handleRedirect(request, RouteURL.PATIENT)
+      return handleRedirect(
+        request,
+        RouteURL.Patient.UPCOMING_VISITS,
+        RouteURLBase.PATIENT
+      )
 
     default:
       return NextResponse.next()
@@ -50,9 +62,9 @@ export const middleware = async (request: NextRequest) => {
 
   if (
     pathname.startsWith(RouteURL.LOGIN) ||
-    pathname.startsWith(RouteURL.Site.UPCOMING_VISITS) ||
-    pathname.startsWith(RouteURL.PATIENT) ||
-    pathname.startsWith(RouteURL.CRA)
+    pathname.startsWith(RouteURLBase.SITE) ||
+    pathname.startsWith(RouteURLBase.PATIENT) ||
+    pathname.startsWith(RouteURLBase.CRA)
   ) {
     const protectedRouteHandle = await handleProtectedRoute(request)
 

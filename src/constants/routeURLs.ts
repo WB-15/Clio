@@ -1,8 +1,13 @@
 import { buildUrl } from '../utils/buildUrl'
 
+export const RouteUrlSubPath = {
+  TRIALS: '/trials',
+  UPCOMING_VISITS: '/upcoming-visits',
+  TRIAL: '/trial',
+}
+
 export const RouteURLBase = {
   SITE: '/site',
-  TRIAL: '/trial',
   PATIENT: '/patient',
   CRA: '/cra',
 }
@@ -10,10 +15,18 @@ export const RouteURLBase = {
 export const RouteURL = {
   LOGIN: '/login',
   Site: {
-    UPCOMING_VISITS: RouteURLBase.SITE,
-    TRIALS: buildUrl([RouteURLBase.SITE, '/trials']),
-    TRIAL: buildUrl([RouteURLBase.SITE, RouteURLBase.TRIAL]),
+    UPCOMING_VISITS: buildUrl([
+      RouteURLBase.SITE,
+      RouteUrlSubPath.UPCOMING_VISITS,
+    ]),
+    TRIALS: buildUrl([RouteURLBase.SITE, RouteUrlSubPath.TRIALS]),
+    TRIAL: buildUrl([RouteURLBase.SITE, RouteUrlSubPath.TRIAL]),
   },
-  PATIENT: RouteURLBase.PATIENT,
-  CRA: RouteURLBase.CRA,
+  Patient: {
+    UPCOMING_VISITS: buildUrl([
+      RouteURLBase.PATIENT,
+      RouteUrlSubPath.UPCOMING_VISITS,
+    ]),
+  },
+  Cra: { TRIALS: buildUrl([RouteURLBase.CRA, RouteUrlSubPath.TRIALS]) },
 }

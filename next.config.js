@@ -34,6 +34,10 @@ const nextConfig = withBundleAnalyzer({
       transform: '@/hooks/{{ matches.[1] }}/{{ member }}',
       skipDefaultConversion: true,
     },
+    '@/actions/?(((\\w*)?/?)*)': {
+      transform: '@/actions/{{ matches.[1] }}/{{ member }}',
+      skipDefaultConversion: true,
+    },
   },
 })
 

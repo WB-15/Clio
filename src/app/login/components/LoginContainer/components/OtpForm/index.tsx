@@ -3,13 +3,13 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 
 import { Button } from '@/app/components'
 import { postUserAuthVerify } from '@/query'
-import { addToastToStack, parseError } from '@/utils'
-import { RouteURL } from '@/constants'
-import { updateAuthTokensCookies } from '@/utils/cookie'
+import { addToastToStack, getUserMainPath, parseError } from '@/utils'
+import { setAuthCookiesAndRedirect } from '@/query/actions'
+import { ApiResponse, IUserWithToken } from '@/types/api'
+import { useInvalidateClientQueries } from '@/app/hooks'
 
 import FormHeading from '../FormHeading'
 import WrappedOtpInput from './components/WrappedOtpInput'
@@ -21,7 +21,7 @@ interface OtpFormProps {
 
 const OtpForm: FC<OtpFormProps> = (props) => {
   const { email, handlePrevStep } = props
-  const router = useRouter()
+  const { invalidateQueriesOnLogIn } = useInvalidateClientQueries()
 
   const schema = z.object({
     otpCode: z.string().min(4, 'Code must be 4 digits').default(''),
@@ -50,29 +50,30 @@ const OtpForm: FC<OtpFormProps> = (props) => {
       email,
       code: formData.otpCode || '',
     }).then((response) => {
-      // TODO: remove any
-      const { data } = response as any
-      const errorMessage = parseError(data)
+      const { data } = response as ApiResponse<IUserWithToken>
+      const errorMessage = parseError(
+        data,
+        'Something went wrong please try again'
+      )
 
-      switch (true) {
-        case !!data?.token:
-          updateAuthTokensCookies(data?.token)
-          router.push(RouteURL.Site.UPCOMING_VISITS)
-          return
-        case !!errorMessage:
-          addToastToStack({
-            title: 'Error',
-            variant: 'danger',
-            description: errorMessage,
+      const authToken = data?.token
+      if (authToken) {
+        setAuthCookiesAndRedirect(
+          data?.token,
+          getUserMainPath({
+            isSiteUser: data?.user?.is_site_user,
+            isPatient: data?.user?.is_patient,
+            isCra: data?.user?.is_cra,
           })
-          return
-        default:
-          addToastToStack({
-            title: 'Error',
-            variant: 'danger',
-            description: 'Something went wrong please try again',
-          })
+        ).then(() => invalidateQueriesOnLogIn())
+        return
       }
+
+      addToastToStack({
+        title: 'Error',
+        variant: 'danger',
+        description: errorMessage,
+      })
     })
   }
 

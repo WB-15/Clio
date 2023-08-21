@@ -1,22 +1,18 @@
 'use client'
 
 import React, { FC } from 'react'
-import { useRouter } from 'next/navigation'
 
 import { Button, Icon } from '@/app/components'
-import { removeAuthTokensCookies } from '@/utils/cookie'
-import { RouteURL } from '@/constants'
-import { queryClient } from '@/query'
+import { clearAuthCookiesAndRedirect } from '@/query/actions'
+import { useInvalidateClientQueries } from '@/app/hooks'
 
 interface LogOutButtonProps {}
 
 const LogOutButton: FC<LogOutButtonProps> = () => {
-  const router = useRouter()
+  const { invalidateQueriesOnLogOut } = useInvalidateClientQueries()
 
   const handleLogOut = () => {
-    removeAuthTokensCookies()
-    queryClient.invalidateQueries()
-    router.push(RouteURL.LOGIN)
+    clearAuthCookiesAndRedirect().then(() => invalidateQueriesOnLogOut())
   }
 
   return (

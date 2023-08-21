@@ -15,6 +15,7 @@ export interface IUser {
   is_cra: boolean
 }
 
-export interface IUserWithToken extends IUser {
+export interface IUserWithToken {
   token: string
+  user: IUser
 }

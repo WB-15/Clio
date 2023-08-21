@@ -44,28 +44,22 @@ const EmailForm: FC<LoginFormProps> = (props) => {
   const onSubmit = (formData: FormType) => {
     mutateUserAuth({ email: formData.email }).then((response) => {
       const { data, status } = response
-      const errorMessage = parseError(data)
+      const errorMessage = parseError(
+        data,
+        'Something went wrong please try again'
+      )
 
-      switch (true) {
-        case status === 200:
-          handleUserEmail(formData.email)
-          handleNextStep()
-          return
-        case !!errorMessage:
-          if (errorMessage)
-            addToastToStack({
-              title: 'Error',
-              variant: 'danger',
-              description: errorMessage,
-            })
-          return
-        default:
-          addToastToStack({
-            title: 'Error',
-            variant: 'danger',
-            description: 'Something went wrong please try again',
-          })
+      if (status >= 200 && status <= 299) {
+        handleUserEmail(formData.email)
+        handleNextStep()
+        return
       }
+
+      addToastToStack({
+        title: 'Error',
+        variant: 'danger',
+        description: errorMessage,
+      })
     })
   }
 
