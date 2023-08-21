@@ -32,12 +32,18 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
     formState: { errors },
     getValues,
     watch,
+    reset,
   } = useForm<FormType>({
     resolver: zodResolver(createTrialSchema),
     defaultValues: {
       visit_windows: [{}],
     },
   })
+
+  const handleCreateDialogOpen = (open: boolean) => {
+    if (open) reset()
+    setIsCreateDialogOpen(open)
+  }
 
   const handleSubmitForm = (data: FormType) => {
     setIsLoading(true)
@@ -53,7 +59,7 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
         })
 
         revalidateTrialListPath()
-        setIsCreateDialogOpen(false)
+        handleCreateDialogOpen(false)
 
         return
       }
@@ -70,7 +76,10 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
   }
 
   return (
-    <Dialog.Root open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+    <Dialog.Root
+      open={isCreateDialogOpen}
+      onOpenChange={handleCreateDialogOpen}
+    >
       <Dialog.Trigger asChild>
         <Button
           variant="primary"
