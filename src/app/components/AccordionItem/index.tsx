@@ -17,7 +17,7 @@ interface AccordionItemProps extends ComponentProps<typeof RadixAccordionItem> {
   triggerChildren: ReactNode
   headerClassName?: string
   contentClassName?: string
-  badges?: { key: string; value: ReactNode }[]
+  badges?: Array<ComponentProps<typeof Badge> & { key?: string }>
   dropdownProps?: CustomDropdownProps
 }
 
@@ -44,8 +44,10 @@ export const AccordionItem: FC<AccordionItemProps> = (props) => {
 
             {badges && (
               <div className="flex gap-3">
-                {badges.map(({ key, value }) => (
-                  <Badge key={key}>{value}</Badge>
+                {badges.map(({ key, children: value, variant }) => (
+                  <Badge key={key} variant={variant}>
+                    {value}
+                  </Badge>
                 ))}
               </div>
             )}

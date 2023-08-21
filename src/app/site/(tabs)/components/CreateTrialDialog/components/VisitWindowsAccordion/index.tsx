@@ -111,10 +111,14 @@ const VisitWindowsAccordion: FC<VisitWindowsAccordionProps> = (props) => {
           const watchBeforeDays = watch(`visit_windows.${i}.window_before_days`)
           const watchAfterDays = watch(`visit_windows.${i}.window_after_days`)
 
+          const errorsCount = Object.keys(
+            errors?.visit_windows?.[i] || {}
+          ).length
+
           const badges = [
             {
               key: `visit_day-${i}`,
-              value: watchVisitDay && (
+              children: watchVisitDay && (
                 <>
                   Day: <span className="font-medium">{watchVisitDay}</span>
                 </>
@@ -122,18 +126,32 @@ const VisitWindowsAccordion: FC<VisitWindowsAccordionProps> = (props) => {
             },
             {
               key: `window_before_after_days-${i}`,
-              value: (watchBeforeDays || watchAfterDays || watchBuffer) && (
-                <>
-                  Window:{' '}
-                  <span className="font-medium">
-                    {`${
-                      isVisitWindowSeparate ? watchBeforeDays : watchBuffer
-                    }/${isVisitWindowSeparate ? watchAfterDays : watchBuffer}`}
-                  </span>
-                </>
-              ),
+              // eslint-disable-next-line no-nested-ternary
+              children: isVisitWindowSeparate
+                ? watchBeforeDays ||
+                  (watchAfterDays && (
+                    <>
+                      Window:{' '}
+                      <span className="font-medium">
+                        {`${watchBeforeDays || 0}/${watchAfterDays || 0}`}
+                      </span>
+                    </>
+                  ))
+                : watchBuffer && (
+                    <>
+                      Window:{' '}
+                      <span className="font-medium">
+                        {`${watchBuffer || 0}/${watchBuffer || 0}`}
+                      </span>
+                    </>
+                  ),
             },
-          ].filter(({ value }) => value)
+            {
+              key: `errors`,
+              variant: 'danger' as const,
+              children: errorsCount && `Error(s): ${errorsCount}`,
+            },
+          ].filter(({ children }) => children)
 
           return (
             <AccordionItem

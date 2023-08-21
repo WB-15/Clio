@@ -1,56 +1,45 @@
 'use server'
 
 import { z } from 'zod'
+
 import { createTrialSchema } from '@/utils/zod'
 import { ITrialBase } from '@/types/api/trial'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
 
-import { postCreateTrial, postVisitWindows } from './requests'
+import { postCreateTrial, postVisitWindows } from '../requests'
 
-export const actionCreateTrial = async (
-  data: z.input<typeof createTrialSchema>
-) => {
+export const createTrial = async (data: z.input<typeof createTrialSchema>) => {
   const authToken = getAuthTokenFromServerComponent()
-  const { visit_windows: visitWindows, ...rest } = data
+  const { visit_windows: visitWindows, ...trialData } = data
 
-  const formattedCreateTrialData = rest
   const formattedVisitWindowsData = visitWindows.map(
     ({
-      name,
-      visit_day,
       separate_visit_window,
       window_before_days,
       window_after_days,
       window_buffer,
-      duration_minutes,
       visit_type,
-      fasting,
+      ...rest
     }) => ({
-      name,
-      visit_day,
       window_before_days: separate_visit_window
         ? window_before_days || 0
         : window_buffer || 0,
       window_after_days: separate_visit_window
         ? window_after_days || 0
         : window_buffer || 0,
-      duration_minutes,
       visit_type: visit_type?.value,
-      fasting,
+      ...rest,
     })
   )
 
-  const createdTrial = await postCreateTrial<ITrialBase[]>(
-    formattedCreateTrialData,
-    {
-      authToken,
-    }
-  )
+  const responseCreateTrial = await postCreateTrial<ITrialBase[]>(trialData, {
+    authToken,
+  })
 
-  const createdTrialId = createdTrial?.data?.[0]?.trial_id
+  const createdTrialId = responseCreateTrial?.data?.[0]?.trial_id
 
   if (createdTrialId) {
-    const createdVisitWindows = await postVisitWindows<ITrialBase>(
+    const responseCreatedVisitWindows = await postVisitWindows<ITrialBase>(
       {
         trialId: createdTrialId,
         data: formattedVisitWindowsData,
@@ -58,8 +47,8 @@ export const actionCreateTrial = async (
       { authToken }
     )
 
-    return createdVisitWindows
+    return responseCreatedVisitWindows
   }
 
-  return createdTrial
+  return { ...responseCreateTrial, status: 400 }
 }

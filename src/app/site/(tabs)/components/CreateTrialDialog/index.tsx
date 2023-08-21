@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { createTrialSchema } from '@/utils/zod'
 import { Button, Icon } from '@/app/components'
-import { actionCreateTrial } from '@/query'
+import { createTrial, revalidateTrialListPath } from '@/query/actions'
 import {
   DialogOverlay,
   DialogContent,
@@ -22,6 +22,7 @@ interface CreateTrialDialogProps {}
 
 const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   type FormType = z.input<typeof createTrialSchema>
 
   const {
@@ -39,24 +40,32 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
   })
 
   const handleSubmitForm = (data: FormType) => {
-    actionCreateTrial(data).then((res) => {
-      if (res.status >= 200 && res.status <= 299) {
+    setIsLoading(true)
+    createTrial(data).then((res) => {
+      setIsLoading(false)
+      const { status } = res
+
+      if (status >= 200 && status <= 299) {
         addToastToStack({
           variant: 'success',
-          title: 'Success',
-          description: 'New trial successfully added!',
+          title: 'Created!',
+          description: 'New trial successfully created!',
         })
 
+        revalidateTrialListPath()
         setIsCreateDialogOpen(false)
+
+        return
       }
 
-      if (res.status >= 400 && res.status <= 499) {
-        addToastToStack({
-          variant: 'danger',
-          title: 'Error',
-          description: parseError(res.data),
-        })
-      }
+      addToastToStack({
+        variant: 'danger',
+        title: 'Error',
+        description: parseError(
+          res,
+          'Something went wrong! A new trial was not created. Please try again later.'
+        ),
+      })
     })
   }
 
@@ -98,6 +107,9 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
                   type="submit"
                   variant="primary"
                   onClick={handleSubmit((data) => handleSubmitForm(data))}
+                  isLoading={isLoading}
+                  className="min-w-[94px]"
+                  loadingText="Confirm"
                 >
                   Confirm
                 </Button>

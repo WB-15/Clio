@@ -1,4 +1,4 @@
-export const parseError = (response: any) => {
+export const parseError = (response: any, fallbackError?: string) => {
   /* Error from backend */
   const backendError = response?.error
 
@@ -13,5 +13,5 @@ export const parseError = (response: any) => {
 
   const zodFullError = `${zodError} ${zodPath}`
 
-  return backendError || zodFullError || null
+  return backendError || zodFullError || fallbackError
 }

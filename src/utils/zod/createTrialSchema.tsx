@@ -23,9 +23,24 @@ export const createTrialSchema = z.object({
           .gte(1, { message: 'Visit day is required' })
           .lte(99999, { message: 'The entered value should not exceed 99999' }),
         separate_visit_window: z.coerce.boolean(),
-        window_buffer: z.coerce.number(),
-        window_before_days: z.coerce.number(),
-        window_after_days: z.coerce.number(),
+        window_buffer: z.coerce
+          .number({
+            invalid_type_error: 'Only numbers allowed',
+          })
+          .optional()
+          .or(z.literal('')),
+        window_before_days: z.coerce
+          .number({
+            invalid_type_error: 'Only numbers allowed',
+          })
+          .optional()
+          .or(z.literal('')),
+        window_after_days: z.coerce
+          .number({
+            invalid_type_error: 'Only numbers allowed',
+          })
+          .optional()
+          .or(z.literal('')),
         duration_minutes: z.coerce
           .number({
             invalid_type_error: 'Duration must contain only numbers',

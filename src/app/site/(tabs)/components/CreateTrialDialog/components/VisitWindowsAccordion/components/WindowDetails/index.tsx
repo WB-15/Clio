@@ -48,7 +48,7 @@ const WindowDetails: FC<WindowDetailsProps> = (props) => {
         labelHeading="Separate before and after windows"
       />
       {isVisitWindowSeparate ? (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 items-start gap-3">
           <WrappedInput
             placeholder="Enter window before"
             labelContent="Window before"
@@ -84,8 +84,8 @@ const WindowDetails: FC<WindowDetailsProps> = (props) => {
         errorMessage={errors.visit_windows?.[index]?.visit_type?.message}
       />
       <WrappedInput
-        placeholder="Enter visit duration"
-        labelContent="Duration"
+        placeholder="Enter visit duration (minutes)"
+        labelContent="Duration (minutes)"
         iconSlotRight={<Icon name="icon-clock" size={20} />}
         errorMessage={errors.visit_windows?.[index]?.duration_minutes?.message}
         {...register(`visit_windows.${index}.duration_minutes`)}
