@@ -43,13 +43,13 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
     setIsLoading(true)
     createTrial(data).then((res) => {
       setIsLoading(false)
-      const { status } = res
+      const { status, data: resData } = res
 
       if (status >= 200 && status <= 299) {
         addToastToStack({
           variant: 'success',
-          title: 'Created!',
-          description: 'New trial successfully created!',
+          title: 'Success',
+          description: 'Trial has been created successfully',
         })
 
         revalidateTrialListPath()
@@ -62,8 +62,8 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
         variant: 'danger',
         title: 'Error',
         description: parseError(
-          res,
-          'Something went wrong! A new trial was not created. Please try again later.'
+          resData ||
+            'Something went wrong! A new trial was not created. Please try again later'
         ),
       })
     })

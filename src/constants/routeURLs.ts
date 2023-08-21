@@ -4,6 +4,8 @@ export const RouteUrlSubPath = {
   TRIALS: '/trials',
   UPCOMING_VISITS: '/upcoming-visits',
   TRIAL: '/trial',
+  PATIENTS_LIST: '/patients-list',
+  CRA_LIST: '/cra-list',
 }
 
 export const RouteURLBase = {
@@ -20,7 +22,18 @@ export const RouteURL = {
       RouteUrlSubPath.UPCOMING_VISITS,
     ]),
     TRIALS: buildUrl([RouteURLBase.SITE, RouteUrlSubPath.TRIALS]),
-    TRIAL: buildUrl([RouteURLBase.SITE, RouteUrlSubPath.TRIAL]),
+    Trial: {
+      PATIENT_LIST: buildUrl([
+        RouteURLBase.SITE,
+        RouteUrlSubPath.TRIAL,
+        RouteUrlSubPath.PATIENTS_LIST,
+      ]),
+      CRA_LIST: buildUrl([
+        RouteURLBase.SITE,
+        RouteUrlSubPath.TRIAL,
+        RouteUrlSubPath.CRA_LIST,
+      ]),
+    },
   },
   Patient: {
     UPCOMING_VISITS: buildUrl([

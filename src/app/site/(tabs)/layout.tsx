@@ -23,23 +23,21 @@ const Layout: FC<LayoutProps> = async (props) => {
     options: { next: { revalidate: 60 * 15, tags: ['trials'] } },
   })
 
-  const SITE_SUBPAGES: ITabNavLink[] = [
+  const SITE_PAGES: ITabNavLink[] = [
     {
       name: 'Upcoming Visits',
       url: RouteURL.Site.UPCOMING_VISITS,
-      prefetch: false,
     },
     {
       name: trialList?.length ? `Trials (${trialList?.length})` : 'Trials',
       url: RouteURL.Site.TRIALS,
-      prefetch: false,
     },
   ]
 
   return (
-    <main className="container min-w-[1024px] pb-28 pt-9">
+    <main className="container py-9">
       <SitePageHeader heading="Dashboard" />
-      <TabNavLinksList navLinks={SITE_SUBPAGES} className="mt-6" />
+      <TabNavLinksList navLinks={SITE_PAGES} className="mt-6" />
       {children}
     </main>
   )
