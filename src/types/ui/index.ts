@@ -40,3 +40,9 @@ export type CustomDropdownProps = {
   dropdownMenuProps?: ComponentProps<typeof RadixDropdownMenuContent>
   dropdownTriggerProps?: ComponentProps<typeof RadixDropdownMenuTrigger>
 }
+
+export type IUIBreadcrumb = {
+  text: string
+  url?: string
+  active?: boolean
+}

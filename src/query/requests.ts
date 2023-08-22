@@ -28,12 +28,25 @@ type IPostCreateVisitWindows = {
   data: IVisitWindow[]
 }
 
+type IGetTrial = {
+  trialId: string
+}
+
 // Server queries
 export const getTrialList = <T>(fetchApiOptions?: FetchApiOptions) =>
   getApi<T>(QueryKey.TRIAL_LIST, fetchApiOptions)
 
 export const getCurrentUser = <T>(fetchApiOptions?: FetchApiOptions) =>
   getApi<T>(QueryKey.ME, fetchApiOptions)
+
+export const getTrial = <T>(
+  { trialId }: IGetTrial,
+  fetchApiOptions?: FetchApiOptions
+) =>
+  getApi<T>(
+    buildUrl([QueryKeyBase.SITE, QueryKeyBase.TRIAL, trialId]),
+    fetchApiOptions
+  )
 
 export const postCreateTrial = <T>(
   data: IPostCreateTrial,

@@ -1,13 +1,13 @@
-import { FC, ReactNode } from 'react'
+import React, { FC, ReactNode } from 'react'
 
-import { TabNavLinksList } from '@/app/components'
+import { PageHeader, TabNavLinksList } from '@/app/components'
 import { RouteURL } from '@/constants'
 import { getTrialList } from '@/query'
 import { ITrial } from '@/types/api'
 import { ITabNavLink } from '@/types/ui'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
 
-import SitePageHeader from './components/SitePageHeader'
+import CreateTrialDialog from './components/CreateTrialDialog'
 
 interface LayoutProps {
   children: ReactNode
@@ -36,7 +36,12 @@ const Layout: FC<LayoutProps> = async (props) => {
 
   return (
     <main className="container py-9">
-      <SitePageHeader heading="Dashboard" />
+      <PageHeader
+        buttonSlotRight={<CreateTrialDialog />}
+        headerWrapperClassName="justify-between"
+      >
+        Dashboard
+      </PageHeader>
       <TabNavLinksList navLinks={SITE_PAGES} className="mt-6" />
       {children}
     </main>

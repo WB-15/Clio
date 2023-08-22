@@ -53,4 +53,7 @@
     <path stroke="currentColor" d="M16 6.1V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h.1"/>
     <rect width="11" height="11" x="8.5" y="8.5" stroke="currentColor" rx="1.5"/>
   </symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24" fill="none">
+    <path stroke="currentColor" stroke-linecap="round" d="m19 19-3.3-3.31L19 19Zm-1.47-7.74a6.26 6.26 0 1 1-12.53 0 6.26 6.26 0 0 1 12.53 0v0Z"/>
+  </symbol>
 </svg>

@@ -13,8 +13,8 @@ interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = () => {
   return (
-    <header className="bg-white">
-      <div className="container grid h-19 grid-flow-col items-center justify-between border-b border-neutral-100 px-9">
+    <header className="border-b border-neutral-100 bg-white">
+      <div className="container grid h-19 grid-flow-col items-center justify-between px-9">
         <Link href={RouteURL.Site.UPCOMING_VISITS}>
           <Image width={81} height={26} src="/img/logo.svg" alt="clio logo" />
         </Link>
@@ -27,7 +27,7 @@ export const Header: FC<HeaderProps> = () => {
                 <Icon
                   name="icon-settings"
                   size={24}
-                  className="duration-300 ease-in-out group-hocus:rotate-180"
+                  className="duration-300 ease-in-out group-hocus:rotate-90"
                 />
               }
             >
