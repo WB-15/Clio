@@ -1,10 +1,12 @@
 import { ComponentProps, FC } from 'react'
 import clsx from 'clsx'
 
-interface TableTdProps extends ComponentProps<'th'> {}
+interface TableLinkTdProps extends ComponentProps<'th'> {
+  url: string
+}
 
-export const TableTd: FC<TableTdProps> = (props) => {
-  const { children, className, align = 'left', ...rest } = props
+export const TableLinkTd: FC<TableLinkTdProps> = (props) => {
+  const { children, className, align = 'left', url, ...rest } = props
 
   return (
     <td
@@ -15,7 +17,9 @@ export const TableTd: FC<TableTdProps> = (props) => {
         className
       )}
     >
-      {children}
+      <a href={url} className="flex h-full items-center">
+        {children}
+      </a>
     </td>
   )
 }

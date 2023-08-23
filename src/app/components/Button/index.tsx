@@ -51,8 +51,8 @@ export const Button = <T extends ElementType = 'button'>(
         {
           'pl-4': !iconSlotLeft,
           'pr-4': !iconSlotRight,
-          'pl-11': iconSlotLeft,
-          'pr-11': iconSlotRight,
+          'pl-10': iconSlotLeft,
+          'pr-10': iconSlotRight,
         },
         className
       )}
@@ -64,13 +64,13 @@ export const Button = <T extends ElementType = 'button'>(
       )}
 
       {iconSlotLeft && (
-        <span className="absolute left-3.5 top-1/2 -translate-y-1/2">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2">
           {iconSlotLeft}
         </span>
       )}
 
       {iconSlotRight && (
-        <span className="absolute right-3.5 top-1/2 -translate-y-1/2">
+        <span className="absolute right-3 top-1/2 -translate-y-1/2">
           {iconSlotRight}
         </span>
       )}

@@ -64,30 +64,36 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
                 ? 'border-red-600'
                 : 'border-neutral-200 hover:border-neutral-400 focus:border-primary-500',
               {
-                'pl-4': !iconSlotLeft,
-                'pr-4': !iconSlotRight,
-                'pl-11': iconSlotLeft,
-                'pr-11': iconSlotRight,
+                'pl-2.5': !iconSlotLeft,
+                'pr-2.5': !iconSlotRight,
+                'pl-10': iconSlotLeft,
+                'pr-10': iconSlotRight,
               }
             )}
             {...rest}
           />
           <span
             className={clsx(
-              'pointer-events-none invisible absolute inset-x-2.5 top-1/2 inline-block -translate-y-1/2 select-none truncate text-sm text-neutral-400 transition-colors duration-300 ease-in-out peer-placeholder-shown:visible peer-enabled:peer-focus:invisible'
+              'pointer-events-none invisible absolute top-1/2 inline-block -translate-y-1/2 select-none truncate text-sm text-neutral-400 transition-colors duration-300 ease-in-out peer-placeholder-shown:visible peer-enabled:peer-focus:invisible',
+              {
+                'left-2.5': !iconSlotLeft,
+                'right-2.5': !iconSlotRight,
+                'left-10': iconSlotLeft,
+                'right-10': iconSlotRight,
+              }
             )}
           >
             {placeholder}
           </span>
 
           {iconSlotLeft && (
-            <span className="absolute left-3.5 top-1/2 -translate-y-1/2">
+            <span className="absolute left-2.5 top-1/2 -translate-y-1/2">
               {iconSlotLeft}
             </span>
           )}
 
           {iconSlotRight && (
-            <span className="absolute right-3.5 top-1/2 -translate-y-1/2">
+            <span className="absolute right-2.5 top-1/2 -translate-y-1/2">
               {iconSlotRight}
             </span>
           )}

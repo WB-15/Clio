@@ -14,7 +14,6 @@ const TabTrials = async () => {
 
   const { data: trialList } = await getTrialList<ITrial[]>({
     authToken,
-    options: { cache: 'no-cache' },
   })
 
   return trialList?.length ? (
