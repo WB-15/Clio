@@ -3,18 +3,20 @@
 import { FC } from 'react'
 
 import { WrappedInput } from '@/app/components/form'
-import { Button, EmptyList, Icon } from '@/app/components'
-import { IPatient } from '@/types/api'
+import { EmptyList, Icon } from '@/app/components'
+import { IPatient, IVisitWindow } from '@/types/api'
 import { TableTh } from '@/app/components/table'
 import { useSearch } from '@/app/hooks/useSearch'
 import PatientsTableRow from './components/PatientsTableRow'
+import CreatePatientDialog from '../CreatePatientDialog'
 
 interface PatientsTableProps {
   patients?: IPatient[]
+  visitWindows?: IVisitWindow[]
 }
 
 const PatientsTable: FC<PatientsTableProps> = (props) => {
-  const { patients } = props
+  const { patients, visitWindows } = props
 
   const {
     searchValue,
@@ -24,6 +26,11 @@ const PatientsTable: FC<PatientsTableProps> = (props) => {
   } = useSearch<IPatient>(patients || [], {
     fuseOptions: {
       keys: ['patient_number'],
+      threshold: 0.32,
+    },
+    customFormatFn: (value) => {
+      const trimmedValue = value.trim()
+      return trimmedValue.startsWith('#') ? trimmedValue.slice(1) : trimmedValue
     },
   })
 
@@ -40,17 +47,12 @@ const PatientsTable: FC<PatientsTableProps> = (props) => {
           onChange={handleChangeSearchInputValue}
         />
 
-        <Button
-          variant="primary"
-          iconSlotLeft={<Icon name="icon-plus" size={20} />}
-        >
-          Add patient
-        </Button>
+        <CreatePatientDialog visitWindows={visitWindows} />
       </div>
 
       {patientsToDisplay?.length ? (
         <div className="overflow-x-auto">
-          <table className="table border-separate border-spacing-0 rounded-lg border border-neutral-100 bg-white pb-1">
+          <table className="table-last-cell-full border-separate border-spacing-0 rounded-lg border border-neutral-100 bg-white pb-1">
             <thead>
               <TableTh classNameInner="pr-14">Patient number</TableTh>
               <TableTh classNameInner="pr-14">Patient status</TableTh>
@@ -67,9 +69,13 @@ const PatientsTable: FC<PatientsTableProps> = (props) => {
         </div>
       ) : (
         <EmptyList
-          heading="No patients yet"
-          description="It is the best time to add patient.
-Click the 'Add patient' button to get started."
+          iconName={isSearchActive ? 'icon-search' : ''}
+          heading={isSearchActive ? 'No patients found' : 'No patients yet'}
+          description={
+            isSearchActive
+              ? "It seems like we couldn't find anything based on your search query."
+              : "It is the best time to add patient. Click the 'Add patient' button to get started."
+          }
         />
       )}
     </div>

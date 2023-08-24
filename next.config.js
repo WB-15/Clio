@@ -8,6 +8,7 @@ const nextConfig = withBundleAnalyzer({
   experimental: {
     appDir: true,
     serverActions: true,
+    logging: 'verbose',
   },
   images: {
     formats: ['image/avif', 'image/webp'],

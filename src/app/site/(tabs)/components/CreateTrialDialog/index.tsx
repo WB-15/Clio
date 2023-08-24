@@ -8,7 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { createTrialSchema } from '@/utils/zod'
 import { Button, Icon } from '@/app/components'
-import { createTrial, revalidateTrialListPath } from '@/query/actions'
+import { createTrial } from '@/app/actions'
+import { revalidateTrialListPath } from '@/app/actions/revalidate'
 import {
   DialogOverlay,
   DialogContent,
@@ -91,8 +92,8 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
       <Dialog.Portal>
         <DialogOverlay contentPosition="right">
           <DialogContent
+            variant="create"
             position="right"
-            classNameInner="h-[calc(100vh-20px)] w-[566px]"
             onInteractOutside={(e) => e.preventDefault()}
           >
             <DialogHeader>Create Trial</DialogHeader>

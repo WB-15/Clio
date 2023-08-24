@@ -1,16 +1,22 @@
 import { PropsWithChildren } from 'react'
 
-import { CustomQueryClientProvider, queryClient } from '@/query'
+import { CustomQueryClientProvider, getCurrentUser, queryClient } from '@/query'
 import { UserContextProvider } from '@/app/context'
+import { getAuthTokenFromServerComponent } from '@/utils/server'
+import { IUser } from '@/types/api'
 
 interface GlobalContextProviderProps extends PropsWithChildren {}
 
 export const GlobalContextProvider = async ({
   children,
 }: GlobalContextProviderProps) => {
+  const { data } = await getCurrentUser<IUser>({
+    authToken: getAuthTokenFromServerComponent(),
+  })
+
   return (
     <CustomQueryClientProvider client={queryClient}>
-      <UserContextProvider>{children}</UserContextProvider>
+      <UserContextProvider data={data}>{children}</UserContextProvider>
     </CustomQueryClientProvider>
   )
 }

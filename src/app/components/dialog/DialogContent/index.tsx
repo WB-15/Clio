@@ -9,11 +9,13 @@ interface DialogContentProps extends RadixDialogContentType {
   classNameInner?: string
   onOpenAutoFocusOverride?: RadixDialogContentType['onOpenAutoFocus']
   position?: 'center' | 'right'
+  variant?: 'default' | 'create'
 }
 
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   (props, ref) => {
     const {
+      variant = 'default',
       position = 'center',
       children,
       className,
@@ -54,6 +56,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         <div
           className={clsx(
             'dialog-content-inner relative flex flex-col overflow-hidden rounded-xl bg-white',
+            { 'h-[calc(100vh-20px)] w-[566px]': variant === 'create' },
             classNameInner
           )}
         >

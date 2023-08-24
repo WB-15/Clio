@@ -22,9 +22,7 @@ const Layout: FC<LayoutProps> = async (props) => {
 
   const { data } = await getTrial<ITrialWithPatients>(
     { trialId: id },
-    {
-      authToken: getAuthTokenFromServerComponent(),
-    }
+    { authToken: getAuthTokenFromServerComponent() }
   )
 
   const TRIAL_PAGES: ITabNavLink[] = [

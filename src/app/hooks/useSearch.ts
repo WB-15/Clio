@@ -8,9 +8,10 @@ export const useSearch = <T>(
   options?: {
     fuseOptions?: Fuse.IFuseOptions<T>
     searchOptions?: Fuse.FuseSearchOptions
+    customFormatFn?: (value: string) => string
   }
 ) => {
-  const { fuseOptions, searchOptions } = options || {}
+  const { fuseOptions, searchOptions, customFormatFn } = options || {}
 
   const [searchValue, setSearchValue] = useState('')
   const [searchedItems, setSearchedItems] = useState<T[] | null>(null)
@@ -28,7 +29,8 @@ export const useSearch = <T>(
     const { value } = e.target
     setSearchValue(value)
 
-    const trimmedValue = value.trim()
+    const formattedValue = customFormatFn ? customFormatFn(value) : value
+    const trimmedValue = formattedValue.trim()
 
     if (!trimmedValue) {
       setSearchedItems(null)

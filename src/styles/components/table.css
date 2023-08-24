@@ -1,17 +1,20 @@
 @layer components {
   .table {
-    tr:last-child {
-      td {
-        border-bottom: 0;
+
+    &-last-cell-full {
+      tr:last-child {
+        td {
+          border-bottom: 0;
+        }
       }
-    }
 
-    th, td {
-      white-space: nowrap;
-    }
+      th, td {
+        white-space: nowrap;
+      }
 
-    th:nth-child(4) {
-      width: 100%;
+      th:nth-child(4) {
+        width: 100%;
+      }
     }
   }
 }

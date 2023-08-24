@@ -3,7 +3,7 @@
 import React, { FC } from 'react'
 
 import { Button, Icon } from '@/app/components'
-import { clearAuthCookiesAndRedirect } from '@/query/actions'
+import { clearAuthCookiesAndRedirect } from '@/app/actions/cookies'
 import { useInvalidateClientQueries } from '@/app/hooks'
 
 interface LogOutButtonProps {}

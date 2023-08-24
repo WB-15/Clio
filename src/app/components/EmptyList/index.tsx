@@ -6,11 +6,12 @@ import { Icon } from '../Icon'
 interface EmptyListProps {
   heading: string
   description: string
+  iconName?: string
   className?: string
 }
 
 export const EmptyList: FC<EmptyListProps> = (props) => {
-  const { heading, description, className } = props
+  const { heading, description, iconName, className } = props
 
   return (
     <div
@@ -19,7 +20,11 @@ export const EmptyList: FC<EmptyListProps> = (props) => {
         className
       )}
     >
-      <Icon name="icon-inbox" size={48} className="text-neutral-400" />
+      <Icon
+        name={iconName || 'icon-inbox'}
+        size={48}
+        className="text-neutral-400"
+      />
       <h2 className="mt-4 max-w-[280px] text-lg font-bold text-neutral-900">
         {heading}
       </h2>

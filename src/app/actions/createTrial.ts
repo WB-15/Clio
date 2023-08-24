@@ -6,7 +6,8 @@ import { createTrialSchema } from '@/utils/zod'
 import { ITrialBase } from '@/types/api/trial'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
 
-import { postCreateTrial, postVisitWindows } from '../requests'
+import { postCreateTrial } from './postCreateTrial'
+import { postCreateVisitWindows } from './postCreateVisitWindows'
 
 export const createTrial = async (data: z.input<typeof createTrialSchema>) => {
   const authToken = getAuthTokenFromServerComponent()
@@ -39,13 +40,14 @@ export const createTrial = async (data: z.input<typeof createTrialSchema>) => {
   const createdTrialId = responseCreateTrial?.data?.[0]?.trial_id
 
   if (createdTrialId) {
-    const responseCreatedVisitWindows = await postVisitWindows<ITrialBase>(
-      {
-        trialId: createdTrialId,
-        data: formattedVisitWindowsData,
-      },
-      { authToken }
-    )
+    const responseCreatedVisitWindows =
+      await postCreateVisitWindows<ITrialBase>(
+        {
+          trialId: createdTrialId,
+          data: formattedVisitWindowsData,
+        },
+        { authToken }
+      )
 
     return responseCreatedVisitWindows
   }

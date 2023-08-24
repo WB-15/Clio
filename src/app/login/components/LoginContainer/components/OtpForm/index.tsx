@@ -7,9 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/app/components'
 import { postUserAuthVerify } from '@/query'
 import { addToastToStack, getUserMainPath, parseError } from '@/utils'
-import { setAuthCookiesAndRedirect } from '@/query/actions'
+import { setAuthCookiesAndRedirect } from '@/app/actions/cookies'
 import { ApiResponse, IUserWithToken } from '@/types/api'
-import { useInvalidateClientQueries } from '@/app/hooks'
 
 import FormHeading from '../FormHeading'
 import WrappedOtpInput from './components/WrappedOtpInput'
@@ -21,7 +20,6 @@ interface OtpFormProps {
 
 const OtpForm: FC<OtpFormProps> = (props) => {
   const { email, handlePrevStep } = props
-  const { invalidateQueriesOnLogIn } = useInvalidateClientQueries()
 
   const schema = z.object({
     otpCode: z.string().min(4, 'Code must be 4 digits').default(''),
@@ -65,7 +63,7 @@ const OtpForm: FC<OtpFormProps> = (props) => {
             isPatient: data?.user?.is_patient,
             isCra: data?.user?.is_cra,
           })
-        ).then(() => invalidateQueriesOnLogIn())
+        )
         return
       }
 

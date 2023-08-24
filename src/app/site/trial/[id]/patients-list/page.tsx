@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { Metadata } from 'next'
 
 import { mergeMetadataWithDefault } from '@/utils/seo'
-import { getTrial } from '@/query'
-import { ITrialWithPatients } from '@/types/api'
+import { getVisitWindows, getTrial } from '@/query'
+import { ITrialWithPatients, IVisitWindow } from '@/types/api'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
 import PatientsTable from './components/PatientsTable'
 
@@ -33,14 +33,28 @@ const TabPatientsList: FC<TabPatientsListProps> = async (props) => {
     params: { id },
   } = props
 
-  const { data } = await getTrial<ITrialWithPatients>(
+  const authToken = getAuthTokenFromServerComponent()
+
+  const { data: trialResponse } = await getTrial<ITrialWithPatients>(
+    {
+      trialId: id,
+    },
+    { authToken }
+  )
+
+  const { data: visitWindowsResponse } = await getVisitWindows<IVisitWindow[]>(
     { trialId: id },
     {
-      authToken: getAuthTokenFromServerComponent(),
+      authToken,
     }
   )
 
-  return <PatientsTable patients={data?.patients} />
+  return (
+    <PatientsTable
+      patients={trialResponse?.patients}
+      visitWindows={visitWindowsResponse}
+    />
+  )
 }
 
 export default TabPatientsList

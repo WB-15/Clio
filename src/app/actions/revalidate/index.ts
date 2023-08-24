@@ -1,0 +1,1 @@
+export { revalidateTrialListPath } from './revalidateTrialListPath'
