@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 const TITLE = 'Homepage'
 const SITE_NAME = 'Clio'
-const DESCRIPTION = 'Next.js started configured by Andrii Pozniakov'
+const DESCRIPTION = 'Clio'
 
 const CANONICAL_URL =
   process.env.NEXT_PUBLIC_CANONICAL_URL ||
