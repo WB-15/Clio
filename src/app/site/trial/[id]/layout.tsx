@@ -61,6 +61,7 @@ const Layout: FC<LayoutProps> = async (props) => {
                 href={RouteURL.Site.TRIALS}
                 iconName="icon-chevron_down"
                 className="rotate-90"
+                label="back"
               />
             }
             buttonSlotRight={
@@ -68,6 +69,7 @@ const Layout: FC<LayoutProps> = async (props) => {
                 iconName="icon-settings"
                 iconClassName="duration-300 ease-in-out group-hocus:rotate-90"
                 className="group"
+                label="open trial settings"
               />
             }
           >

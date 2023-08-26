@@ -128,15 +128,14 @@ const VisitWindowsAccordion: FC<VisitWindowsAccordionProps> = (props) => {
               key: `window_before_after_days-${i}`,
               // eslint-disable-next-line no-nested-ternary
               children: isVisitWindowSeparate
-                ? watchBeforeDays ||
-                  (watchAfterDays && (
+                ? (watchBeforeDays || watchAfterDays) && (
                     <>
                       Window:{' '}
                       <span className="font-medium">
                         {`${watchBeforeDays || 0}/${watchAfterDays || 0}`}
                       </span>
                     </>
-                  ))
+                  )
                 : watchBuffer && (
                     <>
                       Window:{' '}

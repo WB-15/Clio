@@ -31,4 +31,8 @@ export interface IPatient {
   email: any
   phone: string
   next_visit_date: string
+  confirmed_visits: number
+  missed_visits: number
+  completed_visits: number
+  total_visits: number
 }

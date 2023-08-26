@@ -11,6 +11,10 @@ interface PatientsTableRowProps {
 const PatientsTableRow: FC<PatientsTableRowProps> = (props) => {
   const { patient } = props
 
+  const progress =
+    ((patient.completed_visits + patient.missed_visits) * 100) /
+    patient.total_visits
+
   return (
     <tr className="group cursor-pointer duration-300 ease-in-out hover:bg-neutral-50">
       <TableLinkTd url="/" className="text-neutral-900">
@@ -23,7 +27,10 @@ const PatientsTableRow: FC<PatientsTableRowProps> = (props) => {
         </Badge>
       </TableLinkTd>
       <TableLinkTd url="/">
-        <Progress variant={getVariantFormStatus(patient.status)} value={80} />
+        <Progress
+          variant={getVariantFormStatus(patient.status)}
+          value={progress}
+        />
       </TableLinkTd>
       <TableLinkTd url="/">
         <VisitTag data={patient.next_visit_date} />

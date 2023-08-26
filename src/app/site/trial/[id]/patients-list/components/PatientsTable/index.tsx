@@ -2,8 +2,8 @@
 
 import { FC } from 'react'
 
-import { WrappedInput } from '@/app/components/form'
-import { EmptyList, Icon } from '@/app/components'
+import { SearchInput } from '@/app/components/form'
+import { EmptyList } from '@/app/components'
 import { IPatient, IVisitWindow } from '@/types/api'
 import { TableTh } from '@/app/components/table'
 import { useSearch } from '@/app/hooks/useSearch'
@@ -23,6 +23,7 @@ const PatientsTable: FC<PatientsTableProps> = (props) => {
     handleChangeSearchInputValue,
     searchedItems: searchedPatients,
     isSearchActive,
+    handleClearValue,
   } = useSearch<IPatient>(patients || [], {
     fuseOptions: {
       keys: ['patient_number'],
@@ -37,14 +38,14 @@ const PatientsTable: FC<PatientsTableProps> = (props) => {
   const patientsToDisplay = isSearchActive ? searchedPatients : patients
 
   return (
-    <div className="grid gap-4 pt-6">
+    <div className="mt-6 grid gap-4">
       <div className="flex justify-between gap-x-4">
-        <WrappedInput
+        <SearchInput
           placeholder="Search for patient..."
-          iconSlotLeft={<Icon name="icon-search" size={24} />}
           classNameGroup="w-72"
           value={searchValue}
           onChange={handleChangeSearchInputValue}
+          onClearValue={handleClearValue}
         />
 
         <CreatePatientDialog visitWindows={visitWindows} />
@@ -52,7 +53,7 @@ const PatientsTable: FC<PatientsTableProps> = (props) => {
 
       {patientsToDisplay?.length ? (
         <div className="overflow-x-auto">
-          <table className="table-last-cell-full border-separate border-spacing-0 rounded-lg border border-neutral-100 bg-white pb-1">
+          <table className="table-last-cell-full table border-separate border-spacing-0 rounded-lg border border-neutral-100 bg-white pb-1">
             <thead>
               <TableTh classNameInner="pr-14">Patient number</TableTh>
               <TableTh classNameInner="pr-14">Patient status</TableTh>

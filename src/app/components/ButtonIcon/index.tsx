@@ -6,6 +6,8 @@ import { Icon } from '../Icon'
 interface ButtonIconProps<T extends ElementType> {
   as?: T
   iconName: string
+  label: string
+  variant?: 'button' | 'default'
   iconClassName?: string
   disabled?: boolean
 }
@@ -17,6 +19,8 @@ export const ButtonIcon = <T extends ElementType = 'button'>(
   const {
     as = 'button',
     type = 'button',
+    variant = 'button',
+    label,
     iconName,
     iconClassName,
     disabled = false,
@@ -33,9 +37,16 @@ export const ButtonIcon = <T extends ElementType = 'button'>(
       disabled={disabled}
       data-disabled={disabled}
       className={clsx(
-        'rounded-full border border-neutral-200 p-1.5 duration-300 ease-in-out hocus:bg-neutral-100',
+        'duration-150 ease-in-out',
+        {
+          '-m-1 p-1': variant === 'default',
+          'rounded-full border border-neutral-200 p-1.5 duration-300 ease-in-out hocus:bg-neutral-100':
+            variant === 'button',
+        },
         className
       )}
+      title={label}
+      aria-label={label}
     >
       <Icon name={iconName} size={20} className={iconClassName} />
     </Component>
