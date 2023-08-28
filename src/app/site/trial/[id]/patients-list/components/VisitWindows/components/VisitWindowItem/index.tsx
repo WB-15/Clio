@@ -2,7 +2,7 @@ import { FC } from 'react'
 import dayjs from 'dayjs'
 
 import { IVisitWindow } from '@/types/api'
-import { Button, Icon } from '@/app/components'
+import EditVisitDialog from '../EditVisitDialog'
 
 interface VisitWindowItemProps {
   visitWindow: IVisitWindow
@@ -34,12 +34,7 @@ const VisitWindowItem: FC<VisitWindowItemProps> = (props) => {
         {getInfoBlock(`${formattedTimeStart}-${formattedTimeEnd}`)}
       </div>
 
-      <Button
-        variant="outline"
-        iconSlotRight={<Icon name="icon-note" size={20} />}
-      >
-        Edit
-      </Button>
+      <EditVisitDialog visitWindow={visitWindow} />
     </div>
   )
 }

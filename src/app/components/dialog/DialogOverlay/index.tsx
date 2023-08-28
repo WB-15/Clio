@@ -14,7 +14,7 @@ export const DialogOverlay = forwardRef<HTMLDivElement, DialogOverlayProps>(
       <RadixDialogOverlay
         {...rest}
         className={clsx(
-          'dialog-overlay hide-scrollbar fixed inset-0 z-dialog-backdrop grid overflow-y-auto bg-black/25',
+          'dialog-overlay hide-scrollbar fixed inset-0 z-dialog-backdrop grid w-full overflow-y-auto bg-black/25',
           { 'place-items-center': contentPosition === 'center' },
           { 'items-center justify-items-end': contentPosition === 'right' },
           className

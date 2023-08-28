@@ -37,9 +37,15 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       <RadixDialogContent
         {...rest}
         className={clsx(
-          'focus-visible:outline-none-force  z-dialog p-2.5',
-          { 'dialog-content-right': position === 'right' },
-          { 'dialog-content-center': position === 'center' },
+          'focus-visible:outline-none-force z-dialog w-full p-2.5',
+          {
+            'dialog-content-right': position === 'right',
+            'dialog-content-center': position === 'center',
+          },
+          {
+            'max-w-[855px]': variant === 'default',
+            'h-[calc(100vh-20px)] max-w-[586px]': variant === 'create',
+          },
           className
         )}
         onOpenAutoFocus={(e) => {
@@ -55,8 +61,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       >
         <div
           className={clsx(
-            'dialog-content-inner relative flex flex-col overflow-hidden rounded-xl bg-white',
-            { 'h-[calc(100vh-20px)] w-[566px]': variant === 'create' },
+            'dialog-content-inner relative flex h-full flex-col overflow-hidden rounded-xl bg-white',
             classNameInner
           )}
         >
