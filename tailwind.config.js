@@ -45,6 +45,9 @@ module.exports = {
         600: '#F13232',
         900: '#EB0404',
       },
+      orange: {
+        500: '#F48621',
+      },
     },
     extend: {
       width: {

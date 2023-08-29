@@ -1,11 +1,10 @@
 import { ComponentProps, FC } from 'react'
-import { AriaCalendarProps, useCalendar, useLocale } from 'react-aria'
-import { useCalendarState } from 'react-stately'
+import { useCalendar, useLocale } from 'react-aria'
+import { CalendarStateOptions, useCalendarState } from 'react-stately'
 import {
   CalendarDate,
-  CalendarDateTime,
   createCalendar,
-  ZonedDateTime,
+  DateValue,
 } from '@internationalized/date'
 
 import { Icon } from '@/app/components'
@@ -14,14 +13,22 @@ import CalendarGrid from './components/CalendarGrid'
 import ReactAriaButton from './components/ReactAriaButton'
 
 interface CalendarProps extends ComponentProps<'div'> {
-  calendarStateProps?: AriaCalendarProps<
-    CalendarDate | CalendarDateTime | ZonedDateTime
+  calendarStateProps?: Omit<
+    CalendarStateOptions<CalendarDate>,
+    'locale' | 'createCalendar'
   >
+  isDateOutsideVisitWindow: (date: DateValue) => boolean
+  isDateInVisitWindowBuffer: (date: DateValue) => boolean
   className?: string
 }
 
-const Calendar: FC<CalendarProps> = (props) => {
-  const { calendarStateProps, className } = props
+export const Calendar: FC<CalendarProps> = (props) => {
+  const {
+    calendarStateProps,
+    className,
+    isDateOutsideVisitWindow,
+    isDateInVisitWindowBuffer,
+  } = props
   const { locale } = useLocale()
 
   const calendarState = {
@@ -53,9 +60,12 @@ const Calendar: FC<CalendarProps> = (props) => {
           <Icon name="icon-chevron_down" size={22} className="-rotate-90" />
         </ReactAriaButton>
       </div>
-      <CalendarGrid state={state} weekdayStyle="short" />
+      <CalendarGrid
+        state={state}
+        weekdayStyle="short"
+        isDateOutsideVisitWindow={isDateOutsideVisitWindow}
+        isDateInVisitWindowBuffer={isDateInVisitWindowBuffer}
+      />
     </div>
   )
 }
-
-export default Calendar

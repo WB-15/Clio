@@ -3,17 +3,24 @@
 
 import { FC } from 'react'
 import { AriaCalendarGridProps, useCalendarGrid, useLocale } from 'react-aria'
-import { getWeeksInMonth } from '@internationalized/date'
+import { DateValue, getWeeksInMonth } from '@internationalized/date'
 import { CalendarState } from 'react-stately'
 
 import CalendarCell from '../CalendarCell'
 
 interface CalendarGridProps extends AriaCalendarGridProps {
   state: CalendarState
+  isDateOutsideVisitWindow: (date: DateValue) => boolean
+  isDateInVisitWindowBuffer: (date: DateValue) => boolean
 }
 
 const CalendarGrid: FC<CalendarGridProps> = (props) => {
-  const { state, ...rest } = props
+  const {
+    state,
+    isDateOutsideVisitWindow,
+    isDateInVisitWindowBuffer,
+    ...rest
+  } = props
   const { locale } = useLocale()
   const { gridProps, headerProps, weekDays } = useCalendarGrid(rest, state)
 
@@ -43,7 +50,13 @@ const CalendarGrid: FC<CalendarGridProps> = (props) => {
               .getDatesInWeek(weekIndex)
               .map((date, i) =>
                 date ? (
-                  <CalendarCell key={i} state={state} date={date} />
+                  <CalendarCell
+                    key={i}
+                    state={state}
+                    date={date}
+                    isDateOutsideVisitWindow={isDateOutsideVisitWindow}
+                    isDateInVisitWindowBuffer={isDateInVisitWindowBuffer}
+                  />
                 ) : (
                   <td key={i} />
                 )

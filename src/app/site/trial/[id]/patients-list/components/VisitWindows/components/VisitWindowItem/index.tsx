@@ -6,6 +6,8 @@ import EditVisitDialog from '../EditVisitDialog'
 
 interface VisitWindowItemProps {
   visitWindow: IVisitWindow
+  prevVisitWindow?: IVisitWindow
+  nextVisitWindow?: IVisitWindow
 }
 
 const getInfoBlock = (value: string) => (
@@ -15,7 +17,7 @@ const getInfoBlock = (value: string) => (
 )
 
 const VisitWindowItem: FC<VisitWindowItemProps> = (props) => {
-  const { visitWindow } = props
+  const { visitWindow, prevVisitWindow, nextVisitWindow } = props
 
   const date = dayjs(visitWindow.created).add(visitWindow.visit_day, 'days')
   const formattedData = date.format('MM.DD.YYYY')
@@ -34,7 +36,11 @@ const VisitWindowItem: FC<VisitWindowItemProps> = (props) => {
         {getInfoBlock(`${formattedTimeStart}-${formattedTimeEnd}`)}
       </div>
 
-      <EditVisitDialog visitWindow={visitWindow} />
+      <EditVisitDialog
+        visitWindow={visitWindow}
+        prevVisitWindow={prevVisitWindow}
+        nextVisitWindow={nextVisitWindow}
+      />
     </div>
   )
 }
