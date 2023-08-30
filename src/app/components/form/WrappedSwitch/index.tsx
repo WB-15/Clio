@@ -1,5 +1,6 @@
 import { ComponentProps, forwardRef, ReactNode, useId } from 'react'
 import * as Switch from '@radix-ui/react-switch'
+import clsx from 'clsx'
 
 interface WrappedSwitchProps extends ComponentProps<typeof Switch.Root> {
   labelHeading?: ReactNode
@@ -7,7 +8,7 @@ interface WrappedSwitchProps extends ComponentProps<typeof Switch.Root> {
 
 export const WrappedSwitch = forwardRef<HTMLButtonElement, WrappedSwitchProps>(
   (props, ref) => {
-    const { id: idProp, labelHeading, ...rest } = props
+    const { id: idProp, labelHeading, className, ...rest } = props
 
     const fallbackId = useId()
     const id = idProp || `switch-${fallbackId}`
@@ -15,7 +16,7 @@ export const WrappedSwitch = forwardRef<HTMLButtonElement, WrappedSwitchProps>(
     const labelId = `switch-label-${id}`
 
     return (
-      <div className="flex">
+      <div className={clsx('flex', className)}>
         <Switch.Root
           {...rest}
           className="group h-5 w-9.5 shrink-0 rounded-full bg-neutral-300 p-0.5 duration-300 ease-out disabled:opacity-50 data-checked:bg-primary-500"

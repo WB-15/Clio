@@ -2,12 +2,12 @@ import React, { FC } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Button, Icon } from '@/app/components'
 import { RouteURL } from '@/constants'
 
 import User from './components/User'
 import LogOutButton from './components/LogOutButton'
 import NotificationButton from './components/Notification/components/NotificationButton'
+import SiteConfigurationDialog from './components/SiteConfigurationDialog'
 
 interface HeaderProps {}
 
@@ -21,18 +21,7 @@ export const Header: FC<HeaderProps> = () => {
 
         <div className="grid grid-flow-col gap-x-9">
           <div className="grid grid-flow-col gap-x-3.5">
-            <Button
-              variant="outline"
-              iconSlotLeft={
-                <Icon
-                  name="icon-settings"
-                  size={24}
-                  className="duration-300 ease-in-out group-hocus:rotate-90"
-                />
-              }
-            >
-              Site configuration
-            </Button>
+            <SiteConfigurationDialog />
 
             <NotificationButton />
           </div>

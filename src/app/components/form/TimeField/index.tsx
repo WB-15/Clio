@@ -3,6 +3,7 @@
 import { FC, ReactNode, useRef } from 'react'
 import { AriaTimeFieldProps, useLocale, useTimeField } from 'react-aria'
 import { useTimeFieldState } from 'react-stately'
+import clsx from 'clsx'
 
 import { Icon } from '@/app/components'
 
@@ -11,10 +12,11 @@ import DateSegment from './components/DateSegment'
 interface TimeFieldProps extends AriaTimeFieldProps<any> {
   inputSlotLeft?: ReactNode
   hideLabel?: boolean
+  className?: string
 }
 
 export const TimeField: FC<TimeFieldProps> = (props) => {
-  const { label, inputSlotLeft, hideLabel } = props
+  const { label, inputSlotLeft, hideLabel, className } = props
   const { locale } = useLocale()
   const state = useTimeFieldState({
     ...props,
@@ -25,7 +27,7 @@ export const TimeField: FC<TimeFieldProps> = (props) => {
   const { labelProps, fieldProps } = useTimeField(props, state, ref)
 
   return (
-    <div className="grid gap-y-1.5 text-sm">
+    <div className={clsx('grid gap-y-1.5 text-sm', className)}>
       {label && !hideLabel && <span {...labelProps}>{label}</span>}
       <div
         {...fieldProps}
@@ -43,7 +45,10 @@ export const TimeField: FC<TimeFieldProps> = (props) => {
         <Icon
           name="icon-clock"
           size={20}
-          className="ml-1.5 justify-self-end text-black"
+          className={clsx(
+            'justify-self-end text-black',
+            inputSlotLeft ? 'ml-1.5' : 'ml-auto'
+          )}
         />
       </div>
     </div>

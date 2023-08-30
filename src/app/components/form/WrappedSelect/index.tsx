@@ -66,7 +66,7 @@ export const WrappedSelect: FC<WrappedSelectProps> = (props) => {
                 : 'border-neutral-200 hover:border-neutral-400'
             ),
           menu: () =>
-            'select-menu p-1 mt-3 overflow-hidden rounded-xl bg-white border border-neutral-100',
+            'select-menu p-1 mt-3 mb-3 overflow-hidden rounded-xl bg-white border border-neutral-100',
           menuList: () => 'select-menu-list',
           option: () =>
             '!flex leading-6 justify-between items-center py-1.5 px-3 hover:bg-neutral-50 rounded-lg duration-150 ease-out border border-white hover:border-neutral-100',

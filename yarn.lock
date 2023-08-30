@@ -5457,6 +5457,14 @@ react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
+react-timezone-select@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-2.1.2.tgz#ea2771b5de8937e97c8bf559a9148af5a6f3229c"
+  integrity sha512-3oez+ynIyjXK619b61jP6TS43Xj2hxdsC4ilqfMgg+HN7nWrkmi3W2vb+njCk/bP2PEsCyfpYipsjr226j4oow==
+  dependencies:
+    spacetime "^7.4.1"
+    timezone-soft "^1.4.1"
+
 react-transition-group@^4.3.0:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
@@ -5747,6 +5755,11 @@ source-map@^0.5.7:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==
 
+spacetime@^7.4.1:
+  version "7.4.7"
+  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.4.7.tgz#58e88c688727ff9b8e7be243404f511c89399828"
+  integrity sha512-5qVgPHUQj9TD4g1Xl68tXXwEi/27Xatvroyj8VU8/E7RgaqLJNaTte5tu3GRowuMqHcNMxs7UfzKeqAlLCo3tQ==
+
 spdx-correct@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/spdx-correct/-/spdx-correct-3.2.0.tgz#4f5ab0668f0059e34f9c00dce331784a12de4e9c"
@@ -6016,6 +6029,11 @@ through2@^4.0.0:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
+
+timezone-soft@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/timezone-soft/-/timezone-soft-1.4.1.tgz#854eb224545645d9ddad8bcd09144522b0652156"
+  integrity sha512-AnKhVnQmOjKHhdQXXe7cO7MyRGIHEGzedax4Y2N7nOr9dOYEFEBkWFJJwJTvPQvXsEtbWfa6xJj34iZKdC+W+g==
 
 titleize@^3.0.0:
   version "3.0.0"
