@@ -8,14 +8,14 @@ import {
 import { z } from 'zod'
 
 import { WrappedInput } from '@/app/components/form'
-import { createTrialSchema } from '@/utils/zod'
+import { trialSchema } from '@/utils/zod'
 
 import VisitWindowsAccordion from '../VisitWindowsAccordion'
 
 interface CreateTrialFormProps {
-  watch: UseFormWatch<z.input<typeof createTrialSchema>>
-  register: UseFormRegister<z.input<typeof createTrialSchema>>
-  getValues: UseFormGetValues<z.input<typeof createTrialSchema>>
+  watch: UseFormWatch<z.input<typeof trialSchema>>
+  register: UseFormRegister<z.input<typeof trialSchema>>
+  getValues: UseFormGetValues<z.input<typeof trialSchema>>
   control: Control<any>
   errors: any
 }

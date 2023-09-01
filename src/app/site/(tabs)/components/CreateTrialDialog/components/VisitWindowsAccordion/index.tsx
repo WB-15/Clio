@@ -12,15 +12,15 @@ import {
 import { z } from 'zod'
 
 import { Button, Icon, AccordionItem } from '@/app/components'
-import { createTrialSchema } from '@/utils/zod'
+import { trialSchema } from '@/utils/zod'
 import { IUIDropdownItem } from '@/types'
 
 import WindowDetails from './components/WindowDetails'
 
 interface VisitWindowsAccordionProps {
-  watch: UseFormWatch<z.input<typeof createTrialSchema>>
-  register: UseFormRegister<z.input<typeof createTrialSchema>>
-  getValues: UseFormGetValues<z.input<typeof createTrialSchema>>
+  watch: UseFormWatch<z.input<typeof trialSchema>>
+  register: UseFormRegister<z.input<typeof trialSchema>>
+  getValues: UseFormGetValues<z.input<typeof trialSchema>>
   control: Control<any>
   errors: any
 }

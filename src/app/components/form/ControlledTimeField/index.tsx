@@ -3,28 +3,27 @@
 import { ComponentProps, FC } from 'react'
 import { Control, useController } from 'react-hook-form'
 
-import { WrappedSelect } from '../WrappedSelect'
+import { TimeField } from '../TimeField'
 
-type ControlledSelectProps = ComponentProps<typeof WrappedSelect> & {
+type ControlledTimeFieldProps = ComponentProps<typeof TimeField> & {
   name: string
   control: Control<any>
 }
 
-export const ControlledSelect: FC<ControlledSelectProps> = (props) => {
+export const ControlledTimeField: FC<ControlledTimeFieldProps> = (props) => {
   const { control, name, errorMessage, ...rest } = props
 
-  const { field, fieldState } = useController<Record<string, any>>({
+  const { field } = useController<Record<string, any>>({
     control,
     name,
   })
 
   return (
-    <WrappedSelect
+    <TimeField
       {...rest}
       name={field.name}
       onChange={(newValue) => field.onChange(newValue)}
       onBlur={field.onBlur}
-      errors={fieldState.error}
       value={field.value}
       errorMessage={errorMessage}
     />

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { TYPE_OF_VISITS } from '@/constants'
 
-export const createTrialSchema = z.object({
+export const trialSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   contact_name: z.string().min(1, { message: 'Contact name is required' }),
   contact_number: z

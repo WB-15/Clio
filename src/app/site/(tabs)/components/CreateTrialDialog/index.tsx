@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { createTrialSchema } from '@/utils/zod'
+import { trialSchema } from '@/utils/zod'
 import { Button, Icon } from '@/app/components'
 import { createTrial } from '@/app/actions'
 import { revalidateTrialListPath } from '@/app/actions/revalidate'
@@ -24,7 +24,7 @@ interface CreateTrialDialogProps {}
 const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  type FormType = z.input<typeof createTrialSchema>
+  type FormType = z.input<typeof trialSchema>
 
   const {
     register,
@@ -35,7 +35,7 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
     watch,
     reset,
   } = useForm<FormType>({
-    resolver: zodResolver(createTrialSchema),
+    resolver: zodResolver(trialSchema),
     defaultValues: {
       visit_windows: [{}],
     },
@@ -116,7 +116,7 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = () => {
                 <Button
                   type="submit"
                   variant="primary"
-                  onClick={handleSubmit((data) => handleSubmitForm(data))}
+                  onClick={handleSubmit(handleSubmitForm)}
                   isLoading={isLoading}
                   className="min-w-[94px]"
                   loadingText="Confirm"

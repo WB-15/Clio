@@ -2,14 +2,14 @@
 
 import { z } from 'zod'
 
-import { createTrialSchema } from '@/utils/zod'
+import { trialSchema } from '@/utils/zod'
 import { ITrialBase } from '@/types/api/trial'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
 
 import { postCreateTrial } from './postCreateTrial'
 import { postCreateVisitWindows } from './postCreateVisitWindows'
 
-export const createTrial = async (data: z.input<typeof createTrialSchema>) => {
+export const createTrial = async (data: z.input<typeof trialSchema>) => {
   const authToken = getAuthTokenFromServerComponent()
   const { visit_windows: visitWindows, ...trialData } = data
 

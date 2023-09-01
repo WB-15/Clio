@@ -9,13 +9,13 @@ import {
   ControlledSwitch,
 } from '@/app/components/form'
 import { Icon, Tooltip } from '@/app/components'
-import { createTrialSchema } from '@/utils/zod'
+import { trialSchema } from '@/utils/zod'
 import { TYPE_OF_VISITS } from '@/constants'
 
 interface WindowDetailsProps {
   control: Control<any>
-  register: UseFormRegister<z.input<typeof createTrialSchema>>
-  watch: UseFormWatch<z.input<typeof createTrialSchema>>
+  register: UseFormRegister<z.input<typeof trialSchema>>
+  watch: UseFormWatch<z.input<typeof trialSchema>>
   index: number
   errors: any
 }

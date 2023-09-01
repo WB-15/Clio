@@ -102,3 +102,10 @@ export const postApi = <T>(url: string, fetchApiOptions?: FetchApiOptions) => {
     method: 'POST',
   })
 }
+
+export const patchApi = <T>(url: string, fetchApiOptions?: FetchApiOptions) => {
+  return fetchApiWithStatusCode<T>(url, {
+    ...fetchApiOptions,
+    method: 'PATCH',
+  })
+}
