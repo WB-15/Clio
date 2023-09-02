@@ -13,4 +13,5 @@ export const QueryKey = {
   VERIFY: buildUrl([QueryKeyBase.AUTH, '/verify']),
   ME: buildUrl([QueryKeyBase.USER, '/me']),
   TRIAL_LIST: buildUrl([QueryKeyBase.SITE, '/trials']),
+  SITE_CONFIGURATION: QueryKeyBase.SITE,
 }

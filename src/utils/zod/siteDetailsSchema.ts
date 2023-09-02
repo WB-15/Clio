@@ -1,94 +1,55 @@
-import { any, z } from 'zod'
+import { z } from 'zod'
+import { TIMEZONES } from '@/constants'
+
+export const hoursSchema = z
+  .object({
+    isWorking: z.coerce.boolean(),
+    start: z.any(),
+    end: z.any(),
+  })
+  .refine((data) => (data?.isWorking ? data.start && data.end : true), {
+    message: 'Start and End time is required',
+  })
+
+const availabilitySchema = z.object({
+  timezone: z.any().superRefine((data, ctx) => {
+    if (!data?.value)
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Timezone is required',
+      })
+
+    if (!TIMEZONES.includes(data?.value))
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Select from available timezones',
+      })
+  }),
+  sunday: hoursSchema,
+  monday: hoursSchema,
+  tuesday: hoursSchema,
+  wednesday: hoursSchema,
+  thursday: hoursSchema,
+  friday: hoursSchema,
+  saturday: hoursSchema,
+})
 
 export const siteDetailsSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
-  address: z.string().min(1, { message: 'Address is required' }),
+  name: z.string().optional(),
+  address: z.string().optional(),
   contact_number: z
     .string()
-    .min(1, { message: 'Phone is required' })
-    .regex(/^\+?\d{8,}$/, {
+    .regex(/^\+?\d{8,12}$/, {
       message: 'Please provide a valid phone number.',
+    })
+    .optional()
+    .or(z.literal('')),
+  contact_email: z.string().optional(),
+  contact_user_id: z.string().optional(),
+  default_patient_reminder_hours: z
+    .any()
+    .refine((data) => parseInt(data?.value, 10), {
+      message: 'Notification value must be a positive integer',
     }),
-  contact_email: z.string().email('Invalid email address'),
-  default_patient_reminder_hours: z.any().superRefine((val, ctx) => {
-    if (!val?.value)
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Notification is required',
-      })
-
-    if (!parseFloat(val?.value))
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Notification value must be a number',
-      })
-  }),
-  availability: z.object({
-    timezone: z
-      .any()
-      .refine((val) => val?.value, { message: 'Timezone is required' }),
-    sunday: z
-      .object({
-        isWorking: z.coerce.boolean(),
-        start: any(),
-        end: any(),
-      })
-      .refine((data) => (data?.isWorking ? data.start && data.end : true), {
-        message: 'Start and End time is required',
-      }),
-    monday: z
-      .object({
-        isWorking: z.coerce.boolean(),
-        start: any(),
-        end: any(),
-      })
-      .refine((data) => (data?.isWorking ? data.start && data.end : true), {
-        message: 'Start and End time is required',
-      }),
-    tuesday: z
-      .object({
-        isWorking: z.coerce.boolean(),
-        start: any(),
-        end: any(),
-      })
-      .refine((data) => (data?.isWorking ? data.start && data.end : true), {
-        message: 'Start and End time is required',
-      }),
-    wednesday: z
-      .object({
-        isWorking: z.coerce.boolean(),
-        start: any(),
-        end: any(),
-      })
-      .refine((data) => (data?.isWorking ? data.start && data.end : true), {
-        message: 'Start and End time is required',
-      }),
-    thursday: z
-      .object({
-        isWorking: z.coerce.boolean(),
-        start: any(),
-        end: any(),
-      })
-      .refine((data) => (data?.isWorking ? data.start && data.end : true), {
-        message: 'Start and End time is required',
-      }),
-    friday: z
-      .object({
-        isWorking: z.coerce.boolean(),
-        start: any(),
-        end: any(),
-      })
-      .refine((data) => (data?.isWorking ? data.start && data.end : true), {
-        message: 'Start and End time is required',
-      }),
-    saturday: z
-      .object({
-        isWorking: z.coerce.boolean(),
-        start: any(),
-        end: any(),
-      })
-      .refine((data) => (data?.isWorking ? data.start && data.end : true), {
-        message: 'Start and End time is required',
-      }),
-  }),
+  availability: availabilitySchema,
 })

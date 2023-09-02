@@ -1,11 +1,11 @@
 'use client'
 
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { allTimezones, useTimezoneSelect } from 'react-timezone-select'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQuery } from '@tanstack/react-query'
 
 import { Button, Icon } from '@/app/components'
 import {
@@ -21,20 +21,29 @@ import {
   OptionalErrorMessage,
   WrappedInput,
 } from '@/app/components/form'
-import { AVAILABILITY_DAYS, NOTIFICATION_LIST } from '@/constants'
+import {
+  AVAILABILITY_DAYS,
+  NOTIFICATION_LIST,
+  TIMEZONE_SELECT,
+} from '@/constants'
 import { siteDetailsSchema } from '@/utils/zod'
 import { patchSiteConfiguration } from '@/app/actions/patchServerConfiguration'
-import { addToastToStack } from '@/utils'
+import { addToastToStack, parseError } from '@/utils'
+import { getSiteConfiguration, queryClient, QueryKey } from '@/query'
+import { ApiResponse, ISiteConfiguration } from '@/types/api'
+import { getAuthTokenFromCookies } from '@/utils/cookie'
+import {
+  formatSiteConfigurationFormData,
+  formatSiteConfigurationPatchData,
+} from '@/utils/data'
 
 interface SiteConfigurationDialogProps {}
 
 const SiteConfigurationDialog: FC<SiteConfigurationDialogProps> = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const { options: timezoneOptions } = useTimezoneSelect({
-    labelStyle: 'original',
-    timezones: allTimezones,
-  })
+
+  const authToken = getAuthTokenFromCookies()
 
   type FormType = z.input<typeof siteDetailsSchema>
 
@@ -42,111 +51,34 @@ const SiteConfigurationDialog: FC<SiteConfigurationDialogProps> = () => {
     register,
     control,
     handleSubmit,
+    reset,
+    watch,
     formState: { errors },
   } = useForm<FormType>({
     resolver: zodResolver(siteDetailsSchema),
   })
 
+  const { data: configurationSiteData } = useQuery<
+    ApiResponse<ISiteConfiguration>
+  >({
+    queryKey: [QueryKey.SITE_CONFIGURATION],
+    queryFn: () => getSiteConfiguration({ authToken }),
+  })
+
+  useEffect(() => {
+    const { status, data } = configurationSiteData || {}
+
+    if (status !== 200 || !data) return
+
+    const formData = formatSiteConfigurationFormData(data)
+
+    reset(formData)
+  }, [configurationSiteData])
+
   const handleSubmitForm = (data: FormType) => {
     setIsLoading(true)
 
-    const {
-      timezone,
-      sunday,
-      monday,
-      tuesday,
-      wednesday,
-      thursday,
-      friday,
-      saturday,
-    } = data.availability
-
-    const formattedData = {
-      ...data,
-      default_patient_reminder_hours: parseFloat(
-        data.default_patient_reminder_hours?.value
-      ),
-      availability: {
-        timezone: timezone?.value,
-        hours: {
-          sunday: sunday.isWorking
-            ? {
-                start: {
-                  hour: sunday.start?.hour,
-                  minute: sunday.start?.minute,
-                },
-                end: { hour: sunday.end?.hour, minute: sunday.end?.minute },
-              }
-            : null,
-          monday: monday.isWorking
-            ? {
-                start: {
-                  hour: monday.start?.hour,
-                  minute: monday.start?.minute,
-                },
-                end: { hour: monday.end?.hour, minute: monday.end?.minute },
-              }
-            : null,
-          tuesday: tuesday.isWorking
-            ? {
-                start: {
-                  hour: tuesday.start?.hour,
-                  minute: tuesday.start?.minute,
-                },
-                end: { hour: tuesday.end?.hour, minute: tuesday.end?.minute },
-              }
-            : null,
-          wednesday: wednesday.isWorking
-            ? {
-                start: {
-                  hour: wednesday.start?.hour,
-                  minute: wednesday.start?.minute,
-                },
-                end: {
-                  hour: wednesday.end?.hour,
-                  minute: wednesday.end?.minute,
-                },
-              }
-            : null,
-          thursday: thursday.isWorking
-            ? {
-                start: {
-                  hour: thursday.start?.hour,
-                  minute: thursday.start?.minute,
-                },
-                end: {
-                  hour: thursday.end?.hour,
-                  minute: thursday.end?.minute,
-                },
-              }
-            : null,
-          friday: friday.isWorking
-            ? {
-                start: {
-                  hour: friday.start?.hour,
-                  minute: friday.start?.minute,
-                },
-                end: {
-                  hour: friday.end?.hour,
-                  minute: friday.end?.minute,
-                },
-              }
-            : null,
-          saturday: saturday.isWorking
-            ? {
-                start: {
-                  hour: saturday.start?.hour,
-                  minute: saturday.start?.minute,
-                },
-                end: {
-                  hour: saturday.end?.hour,
-                  minute: saturday.end?.minute,
-                },
-              }
-            : null,
-        },
-      },
-    }
+    const formattedData = formatSiteConfigurationPatchData(data)
 
     patchSiteConfiguration(formattedData)
       .then((res) => {
@@ -157,10 +89,21 @@ const SiteConfigurationDialog: FC<SiteConfigurationDialogProps> = () => {
             description: 'Successfully updated',
           })
 
+          queryClient.invalidateQueries({
+            queryKey: [QueryKey.SITE_CONFIGURATION],
+          })
           setIsDialogOpen(false)
+          return
         }
+
+        const errorMessage = parseError(res, 'Something went wrong')
+        if (errorMessage)
+          addToastToStack({
+            variant: 'danger',
+            title: 'Error',
+            description: errorMessage,
+          })
       })
-      .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
   }
 
@@ -221,47 +164,62 @@ const SiteConfigurationDialog: FC<SiteConfigurationDialogProps> = () => {
               <ControlledSelect
                 labelContent="Timezone"
                 placeholder="Select timezone"
-                options={timezoneOptions}
+                options={TIMEZONE_SELECT}
                 name="availability.timezone"
                 control={control}
                 errorMessage={errors?.availability?.timezone?.message?.toString()}
               />
 
               <div className="mt-2 grid gap-y-3 border-t border-neutral-200 pt-6">
-                {AVAILABILITY_DAYS.map(({ dayOfWeek, name }) => (
-                  <div
-                    key={dayOfWeek}
-                    className="grid grid-cols-[1fr_150px_10px_150px] items-center gap-x-3"
-                  >
-                    <ControlledSwitch
-                      name={`availability.${name}.isWorking`}
-                      control={control}
-                      labelHeading={dayOfWeek}
-                      className="flex-grow"
-                    />
-                    <ControlledTimeField
-                      control={control}
-                      name={`availability.${name}.start`}
-                      hourCycle={24}
-                      label={`Availability time from for ${dayOfWeek}`}
-                      hideLabel
-                      className="min-w-[150px]"
-                    />
-                    <span className="text-sm text-neutral-400">–</span>
-                    <ControlledTimeField
-                      control={control}
-                      name={`availability.${name}.end`}
-                      hourCycle={24}
-                      label={`Availability time to for ${dayOfWeek}`}
-                      hideLabel
-                      className="min-w-[150px]"
-                    />
-                    <OptionalErrorMessage
-                      errorText={(errors as any)?.availability?.[name]?.message}
-                      className="col-span-full mt-1.5"
-                    />
-                  </div>
-                ))}
+                {AVAILABILITY_DAYS.map(({ dayOfWeek, name }) => {
+                  // @ts-ignore
+                  const isDayActive = watch(`availability.${name}.isWorking`)
+
+                  return (
+                    <div
+                      key={dayOfWeek}
+                      className="grid grid-cols-[1fr_auto] items-center gap-x-3"
+                    >
+                      <ControlledSwitch
+                        name={`availability.${name}.isWorking`}
+                        control={control}
+                        labelHeading={dayOfWeek}
+                        className="flex-grow"
+                      />
+                      {isDayActive ? (
+                        <div className="grid grid-cols-[150px_10px_150px] items-center gap-x-3">
+                          <ControlledTimeField
+                            control={control}
+                            name={`availability.${name}.start`}
+                            hourCycle={24}
+                            label={`Availability time from for ${dayOfWeek}`}
+                            hideLabel
+                            className="min-w-[150px]"
+                          />
+                          <span className="text-sm text-neutral-400">–</span>
+                          <ControlledTimeField
+                            control={control}
+                            name={`availability.${name}.end`}
+                            hourCycle={24}
+                            label={`Availability time to for ${dayOfWeek}`}
+                            hideLabel
+                            className="min-w-[150px]"
+                          />
+                        </div>
+                      ) : (
+                        <div className="grid h-9 w-[334px] items-center rounded-lg border border-neutral-100 bg-neutral-50 px-4 text-sm text-neutral-600">
+                          Closed
+                        </div>
+                      )}
+                      <OptionalErrorMessage
+                        errorText={
+                          (errors as any)?.availability?.[name]?.message
+                        }
+                        className="col-span-full mt-1.5"
+                      />
+                    </div>
+                  )
+                })}
               </div>
 
               <h3 className="mt-4 font-bold">Notification</h3>

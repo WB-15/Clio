@@ -1,2 +1,2 @@
-export { trialSchema } from './trialSchema'
-export { siteDetailsSchema } from './siteDetailsSchema'
+export * from './trialSchema'
+export * from './siteDetailsSchema'

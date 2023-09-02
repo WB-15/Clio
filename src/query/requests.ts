@@ -18,6 +18,9 @@ export const getTrialList = <T>(fetchApiOptions?: FetchApiOptions) =>
 export const getCurrentUser = <T>(fetchApiOptions?: FetchApiOptions) =>
   getApi<T>(QueryKey.ME, fetchApiOptions)
 
+export const getSiteConfiguration = <T>(fetchApiOptions?: FetchApiOptions) =>
+  getApi<T>(QueryKey.SITE_CONFIGURATION, fetchApiOptions)
+
 export const getTrial = <T>(
   { trialId }: IGetTrial,
   fetchApiOptions?: FetchApiOptions

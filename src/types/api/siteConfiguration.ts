@@ -1,8 +1,8 @@
 export interface ISiteConfiguration {
-  name: string
-  address: string
-  contact_number: string
-  contact_email: string
+  name?: string
+  address?: string
+  contact_number?: string
+  contact_email?: string
   default_patient_reminder_hours: number
   availability: ISiteAvailability
 }
