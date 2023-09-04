@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
@@ -19,6 +19,7 @@ interface OtpFormProps {
 }
 
 const OtpForm: FC<OtpFormProps> = (props) => {
+  const [isLoading, setIsLoading] = useState(false)
   const { email, handlePrevStep } = props
 
   const schema = z.object({
@@ -35,7 +36,7 @@ const OtpForm: FC<OtpFormProps> = (props) => {
     resolver: zodResolver(schema),
   })
 
-  const { mutateAsync: mutateUserAuth, isPending } = useMutation({
+  const { mutateAsync: mutateUserAuth } = useMutation({
     mutationFn: postUserAuthVerify,
     // Auth error
     onError: (error) => {
@@ -44,6 +45,7 @@ const OtpForm: FC<OtpFormProps> = (props) => {
   })
 
   const onSubmit = (formData: FormType) => {
+    setIsLoading(true)
     mutateUserAuth({
       email,
       code: formData.otpCode || '',
@@ -64,9 +66,11 @@ const OtpForm: FC<OtpFormProps> = (props) => {
             isCra: data?.user?.is_cra,
           })
         )
+
         return
       }
 
+      setIsLoading(false)
       addToastToStack({
         title: 'Error',
         variant: 'danger',
@@ -89,7 +93,7 @@ const OtpForm: FC<OtpFormProps> = (props) => {
         variant="primary"
         className="mt-2"
         loadingText="Confirm"
-        isLoading={isPending}
+        isLoading={isLoading}
       >
         Confirm
       </Button>

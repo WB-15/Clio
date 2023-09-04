@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 import { mergeMetadataWithDefault } from '@/utils/seo'
-import { getTrial } from '@/query'
+import { getTrial } from '@/app/actions/trial'
 import { ITrialWithPatients } from '@/types/api'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
 
