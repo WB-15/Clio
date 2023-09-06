@@ -2,17 +2,17 @@ import { z } from 'zod'
 import { TYPE_OF_VISITS } from '@/constants'
 
 export const trialSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
-  contact_name: z.string().min(1, { message: 'Contact name is required' }),
+  name: z.string().optional(),
+  contact_name: z.string().optional(),
   contact_number: z
     .string()
-    .min(1, { message: 'Phone is required' })
-    .regex(/^\+?\d{8,}$/, {
-      message: 'Please provide a valid phone number.',
-    }),
+    .regex(/^\+?\d{8,12}$/)
+    .optional()
+    .or(z.literal('')),
   visit_windows: z
     .array(
       z.object({
+        visit_window_id: z.string().optional(),
         name: z
           .string({ required_error: 'Name is required' })
           .min(1, { message: 'Name is required' }),
@@ -20,25 +20,28 @@ export const trialSchema = z.object({
           .number({
             invalid_type_error: 'Day of visit must contain only numbers',
           })
-          .gte(1, { message: 'Visit day is required' })
+          .gte(1, { message: 'Visit day must be positive' })
           .lte(99999, { message: 'The entered value should not exceed 99999' }),
         separate_visit_window: z.coerce.boolean(),
         window_buffer: z.coerce
           .number({
             invalid_type_error: 'Only numbers allowed',
           })
+          .gte(1, { message: 'Window buffer must be positive' })
           .optional()
           .or(z.literal('')),
         window_before_days: z.coerce
           .number({
             invalid_type_error: 'Only numbers allowed',
           })
+          .gte(1, { message: 'Must be positive' })
           .optional()
           .or(z.literal('')),
         window_after_days: z.coerce
           .number({
             invalid_type_error: 'Only numbers allowed',
           })
+          .gte(1, { message: 'Must be positive' })
           .optional()
           .or(z.literal('')),
         duration_minutes: z.coerce

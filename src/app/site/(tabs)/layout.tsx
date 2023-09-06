@@ -7,7 +7,7 @@ import { ITrial } from '@/types/api'
 import { ITabNavLink } from '@/types/ui'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
 
-import CreateTrialDialog from './components/CreateTrialDialog'
+import CreateTrialDialog from '../components/CreateTrialDialog'
 
 interface LayoutProps {
   children: ReactNode
@@ -20,7 +20,6 @@ const Layout: FC<LayoutProps> = async (props) => {
 
   const { data: trialList } = await getTrialList<ITrial[]>({
     authToken,
-    options: { next: { revalidate: 60 * 15, tags: ['trials'] } },
   })
 
   const SITE_PAGES: ITabNavLink[] = [

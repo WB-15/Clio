@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Metadata } from 'next'
 
 import { mergeMetadataWithDefault } from '@/utils/seo'
-import { getVisitWindows, getTrial } from '@/query'
+import { getVisitWindows, getTrial } from '@/app/actions/trial'
 import { ITrialWithPatients, IVisitWindow } from '@/types/api'
 import { getAuthTokenFromServerComponent } from '@/utils/server'
 import PatientsTable from './components/PatientsTable'

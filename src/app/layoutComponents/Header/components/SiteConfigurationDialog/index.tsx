@@ -27,7 +27,7 @@ import {
   TIMEZONE_SELECT,
 } from '@/constants'
 import { siteDetailsSchema } from '@/utils/zod'
-import { patchSiteConfiguration } from '@/app/actions/patchServerConfiguration'
+import { patchSiteConfiguration } from '@/app/actions'
 import { addToastToStack, parseError } from '@/utils'
 import { getSiteConfiguration, queryClient, QueryKey } from '@/query'
 import { ApiResponse, ISiteConfiguration } from '@/types/api'

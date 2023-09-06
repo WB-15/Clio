@@ -3,6 +3,7 @@
 import { FetchApiOptions } from '@/types'
 import { postApi, QueryKeyBase } from '@/query'
 import { buildUrl } from '@/utils'
+import { getAuthTokenFromServerComponent } from '@/utils/server'
 
 type IVisitWindow = {
   name: string
@@ -14,13 +15,13 @@ type IVisitWindow = {
   fasting: boolean
 }
 
-type IPostCreateVisitWindows = {
+type IPostVisitWindows = {
   trialId: string
   data: IVisitWindow[]
 }
 
-export const postCreateVisitWindows = <T>(
-  { trialId, data }: IPostCreateVisitWindows,
+export const postVisitWindows = <T>(
+  { trialId, data }: IPostVisitWindows,
   fetchApiOptions?: FetchApiOptions
 ) =>
   postApi<T>(
@@ -32,3 +33,15 @@ export const postCreateVisitWindows = <T>(
     ]),
     { ...fetchApiOptions, body: data }
   )
+
+export const postVisitWindowsWithAuth = <T>(
+  { trialId, data }: IPostVisitWindows,
+  fetchApiOptions?: FetchApiOptions
+) => {
+  const authToken = getAuthTokenFromServerComponent()
+
+  return postVisitWindows<T>(
+    { trialId, data },
+    { ...fetchApiOptions, authToken }
+  )
+}

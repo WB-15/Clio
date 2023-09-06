@@ -22,18 +22,19 @@ export const RouteURL = {
       RouteUrlSubPath.UPCOMING_VISITS,
     ]),
     TRIALS: buildUrl([RouteURLBase.SITE, RouteUrlSubPath.TRIALS]),
-    Trial: {
-      PATIENT_LIST: buildUrl([
-        RouteURLBase.SITE,
-        RouteUrlSubPath.TRIAL,
-        RouteUrlSubPath.PATIENTS_LIST,
-      ]),
-      CRA_LIST: buildUrl([
-        RouteURLBase.SITE,
-        RouteUrlSubPath.TRIAL,
-        RouteUrlSubPath.CRA_LIST,
-      ]),
-    },
+    TRIAL: buildUrl([RouteURLBase.SITE, RouteUrlSubPath.TRIAL]),
+    // Trial: {
+    //   PATIENT_LIST: buildUrl([
+    //     RouteURLBase.SITE,
+    //     RouteUrlSubPath.TRIAL,
+    //     RouteUrlSubPath.PATIENTS_LIST,
+    //   ]),
+    //   CRA_LIST: buildUrl([
+    //     RouteURLBase.SITE,
+    //     RouteUrlSubPath.TRIAL,
+    //     RouteUrlSubPath.CRA_LIST,
+    //   ]),
+    // },
   },
   Patient: {
     UPCOMING_VISITS: buildUrl([
