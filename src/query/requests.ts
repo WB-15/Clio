@@ -22,3 +22,6 @@ export const postUserAuth = ({ email }: IPostUserAuth) =>
 
 export const postUserAuthVerify = ({ email, code }: IPostUserAuthVerify) =>
   postApi(QueryKey.VERIFY, { body: { email, code } })
+
+export const getUpcomingList = <T>(fetchApiOptions?: FetchApiOptions) =>
+  getApi<T>(QueryKey.SITE_UPCOMING_VISIT, fetchApiOptions)
