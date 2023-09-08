@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export interface IVisitWindow {
   visit_window_id: string
   name: string
@@ -10,4 +12,5 @@ export interface IVisitWindow {
   fasting: boolean
   created: string
   modified: string
+  visit_datetime: dayjs.Dayjs
 }

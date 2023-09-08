@@ -9,7 +9,7 @@ export interface IUpcomingBase {
   patient_last_name: string
   patient_id: string
   duration_minutes: number
-  visit_type: number
+  visit_type: string
   visit_id: string
   fasting: boolean
   status: VisitStatus

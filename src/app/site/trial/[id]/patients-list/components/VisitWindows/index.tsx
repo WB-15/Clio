@@ -5,10 +5,11 @@ import VisitWindowItem from './components/VisitWindowItem'
 
 interface VisitWindowsProps {
   visitWindows: IVisitWindow[]
+  setVisitWindowsData: (value: IVisitWindow) => void
 }
 
 const VisitWindows: FC<VisitWindowsProps> = (props) => {
-  const { visitWindows } = props
+  const { visitWindows, setVisitWindowsData } = props
 
   return (
     <div className="grid gap-y-2">
@@ -18,6 +19,7 @@ const VisitWindows: FC<VisitWindowsProps> = (props) => {
           visitWindow={visitWindow}
           prevVisitWindow={visitWindows[i - 1]}
           nextVisitWindow={visitWindows[i + 1]}
+          setVisitWindowsData={setVisitWindowsData}
         />
       ))}
     </div>

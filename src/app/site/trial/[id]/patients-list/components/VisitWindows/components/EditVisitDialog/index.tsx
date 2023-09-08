@@ -1,5 +1,10 @@
 import React, { FC, useState } from 'react'
-import { getLocalTimeZone, today, getDayOfWeek } from '@internationalized/date'
+import {
+  getLocalTimeZone,
+  today,
+  getDayOfWeek,
+  Time,
+} from '@internationalized/date'
 import dayjs from 'dayjs'
 
 import {
@@ -18,15 +23,33 @@ import {
 } from '@/app/components/dialog'
 import { IVisitWindow } from '@/types/api'
 import { Calendar, TimeField } from '@/app/components/form'
+import { hoursToMinutes } from '@/utils'
 
 interface EditVisitDialogProps {
   visitWindow: IVisitWindow
   prevVisitWindow?: IVisitWindow
   nextVisitWindow?: IVisitWindow
+  onConfirm: (value: IVisitWindow) => void
 }
 
 const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
-  const { visitWindow, prevVisitWindow, nextVisitWindow } = props
+  const { visitWindow, prevVisitWindow, nextVisitWindow, onConfirm } = props
+  const visitEndTime = dayjs(visitWindow.visit_datetime).add(
+    visitWindow.duration_minutes,
+    'minutes'
+  )
+  const startTimeProps = new Time(
+    parseInt(dayjs(visitWindow.visit_datetime).format('HH'), 10),
+    parseInt(dayjs(visitWindow.visit_datetime).format('mm'), 10)
+  )
+  const [startTime, setStartTime] = useState<Time>(startTimeProps)
+  const [endTime, setEndTime] = useState<Time>(
+    new Time(
+      parseInt(visitEndTime.format('HH'), 10),
+      parseInt(visitEndTime.format('mm'), 10)
+    )
+  )
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const todayDate = today(getLocalTimeZone())
 
@@ -55,8 +78,29 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
       })
     : visitWindowBufferEndDate.add({ days: visitWindow.window_after_days })
 
+  const handleConfirm = () => {
+    const updatedMinutes = hoursToMinutes(startTime)
+
+    const newVisitDatetime = dayjs(calendarDate.toString()).add(
+      updatedMinutes,
+      'minute'
+    )
+
+    const newVisitWindow = {
+      ...visitWindow,
+      visit_datetime: newVisitDatetime,
+    }
+    onConfirm(newVisitWindow)
+    setIsDialogOpen(false)
+  }
+
+  const handleStartTimeChange = (value: Time) => {
+    setStartTime(value)
+    setEndTime(value.add({ minutes: visitWindow.duration_minutes }))
+  }
+
   return (
-    <RadixDialogRoot>
+    <RadixDialogRoot open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <RadixDialogTrigger asChild>
         <Button
           variant="outline"
@@ -102,6 +146,8 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
                     label="Time"
                     hourCycle={24}
                     inputSlotLeft="From:"
+                    value={startTime}
+                    onChange={(value) => handleStartTimeChange(value as Time)}
                   />
                   <span className="text-sm leading-9 text-neutral-400">-</span>
                   <TimeField
@@ -109,6 +155,8 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
                     hourCycle={24}
                     inputSlotLeft="To:"
                     hideLabel
+                    isDisabled
+                    value={endTime}
                   />
                 </div>
               </div>
@@ -121,7 +169,7 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
                 </RadixDialogClose>
               }
               buttonSlotPrimary={
-                <Button type="submit" variant="primary">
+                <Button type="submit" variant="primary" onClick={handleConfirm}>
                   Confirm
                 </Button>
               }
