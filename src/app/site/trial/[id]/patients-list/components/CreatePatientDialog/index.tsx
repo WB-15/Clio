@@ -5,10 +5,11 @@ import {
   Dialog as RadixDialogRoot,
   Trigger as RadixDialogTrigger,
 } from '@radix-ui/react-dialog'
+import dayjs from 'dayjs'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import dayjs from 'dayjs'
+import { useRouter } from 'next/navigation'
 import { Button, Icon } from '@/app/components'
 import {
   DialogContent,
@@ -16,18 +17,23 @@ import {
   DialogHeader,
   DialogOverlay,
 } from '@/app/components/dialog'
-import { ControlledSelect, WrappedInput } from '@/app/components/form'
+import { WrappedInput } from '@/app/components/form'
 import VisitWindows from '@/app/site/trial/[id]/patients-list/components/VisitWindows'
-import { PATIENT_STATUSES } from '@/constants'
 import { IVisitWindow } from '@/types/api'
 import { patientSchema } from '@/utils/zod'
+import { postPatient } from '@/app/actions/patient'
+import { postVisit } from '@/app/actions/visit'
+import { addToastToStack } from '@/utils'
 
 interface CreatePatientDialogProps {
   visitWindows?: IVisitWindow[]
+  trailId: string
+  authToken: string
 }
 
 const CreatePatientDialog: FC<CreatePatientDialogProps> = (props) => {
-  const { visitWindows } = props
+  const { visitWindows, trailId, authToken } = props
+  const router = useRouter()
   type FormType = z.input<typeof patientSchema>
   const [visitWindowsData, setVisitWindowsData] = useState<IVisitWindow[]>(
     visitWindows?.map((item) => ({
@@ -35,12 +41,13 @@ const CreatePatientDialog: FC<CreatePatientDialogProps> = (props) => {
       visit_datetime: dayjs().add(item.visit_day, 'days'),
     })) || []
   )
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
   const defaultValues = useMemo(
     () => ({
-      full_name: '',
+      first_name: '',
+      last_name: '',
       patient_number: '',
-      patient_status: PATIENT_STATUSES[0],
       visit_windows: visitWindows,
       phone_number: '',
       email: '',
@@ -50,7 +57,6 @@ const CreatePatientDialog: FC<CreatePatientDialogProps> = (props) => {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -64,7 +70,50 @@ const CreatePatientDialog: FC<CreatePatientDialogProps> = (props) => {
   }, [defaultValues, reset])
 
   const onSubmit = (formData: FormType) => {
-    console.log(formData)
+    const user = JSON.parse(localStorage.getItem('user')!)
+    const visitData = visitWindowsData.map((item) => ({
+      visit_window_id: item.visit_window_id,
+      visit_datetime: dayjs(item.visit_datetime),
+    }))
+
+    const patientData = {
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      email: formData.email,
+      phone: formData.phone_number,
+      patient_number: formData.patient_number,
+      user_id: user?.user_id,
+      screening_visit: dayjs(),
+    }
+
+    postPatient(patientData, trailId, { authToken })
+      .then((res) => {
+        if (!(res.status >= 400 && res.status <= 499)) {
+          const data = res?.data as unknown as { patient_id: string }
+          postVisit(visitData, trailId, data?.patient_id, { authToken })
+          addToastToStack({
+            variant: 'success',
+            title: 'Success',
+            description: 'Patient has been added successfully',
+          })
+          setOpenModal(false)
+          router.refresh()
+          return
+        }
+
+        addToastToStack({
+          variant: 'danger',
+          title: 'Error',
+          description: 'Something went wrong! Try again later',
+        })
+      })
+      .catch(() =>
+        addToastToStack({
+          variant: 'danger',
+          title: 'Error',
+          description: 'Something went wrong! Try again later',
+        })
+      )
   }
 
   const handleSetVisitWindowData = (value: IVisitWindow) => {
@@ -76,7 +125,7 @@ const CreatePatientDialog: FC<CreatePatientDialogProps> = (props) => {
   }
 
   return (
-    <RadixDialogRoot>
+    <RadixDialogRoot open={openModal} onOpenChange={setOpenModal}>
       <RadixDialogTrigger asChild>
         <Button
           variant="primary"
@@ -94,6 +143,7 @@ const CreatePatientDialog: FC<CreatePatientDialogProps> = (props) => {
             className="max-w-[630px]"
           >
             <DialogHeader>Add patient to trial</DialogHeader>
+
             <div className="hide-scrollbar flex-grow overflow-auto px-6 pb-12 pt-6">
               <form
                 className="grid gap-y-4"
@@ -102,25 +152,22 @@ const CreatePatientDialog: FC<CreatePatientDialogProps> = (props) => {
               >
                 <h3 className="font-bold">Basic Information</h3>
                 <WrappedInput
-                  labelContent="Full patient name"
-                  placeholder="Enter name of patient"
+                  labelContent="First patient name"
+                  placeholder="Enter first name of patient"
                   errors={errors}
-                  {...register('full_name')}
+                  {...register('first_name')}
+                />
+                <WrappedInput
+                  labelContent="Last patient name"
+                  placeholder="Enter last name of patient"
+                  errors={errors}
+                  {...register('last_name')}
                 />
                 <WrappedInput
                   labelContent="Patient number"
                   placeholder="Enter patient number"
                   errors={errors}
                   {...register('patient_number')}
-                />
-                <ControlledSelect
-                  placeholder="Patient status"
-                  labelContent="Patient status"
-                  options={PATIENT_STATUSES}
-                  defaultValue={PATIENT_STATUSES[0]}
-                  name="patient_status"
-                  control={control}
-                  errorMessage={errors?.patient_status?.message?.toString()}
                 />
                 <WrappedInput
                   labelContent="Phone number"

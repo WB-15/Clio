@@ -6,8 +6,6 @@ import EditVisitDialog from '../EditVisitDialog'
 
 interface VisitWindowItemProps {
   visitWindow: IVisitWindow
-  prevVisitWindow?: IVisitWindow
-  nextVisitWindow?: IVisitWindow
   setVisitWindowsData: (value: IVisitWindow) => void
 }
 
@@ -18,8 +16,7 @@ const getInfoBlock = (value: string) => (
 )
 
 const VisitWindowItem: FC<VisitWindowItemProps> = (props) => {
-  const { visitWindow, prevVisitWindow, nextVisitWindow, setVisitWindowsData } =
-    props
+  const { visitWindow, setVisitWindowsData } = props
 
   const date = visitWindow.visit_datetime
 
@@ -44,12 +41,7 @@ const VisitWindowItem: FC<VisitWindowItemProps> = (props) => {
         {getInfoBlock(`${formattedNumber(visitWindow.duration_minutes / 60)}h`)}
       </div>
 
-      <EditVisitDialog
-        visitWindow={visitWindow}
-        prevVisitWindow={prevVisitWindow}
-        nextVisitWindow={nextVisitWindow}
-        onConfirm={saveData}
-      />
+      <EditVisitDialog visitWindow={visitWindow} onConfirm={saveData} />
     </div>
   )
 }

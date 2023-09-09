@@ -13,10 +13,12 @@ import CreatePatientDialog from '../CreatePatientDialog'
 interface PatientsTableProps {
   patients?: IPatient[]
   visitWindows?: IVisitWindow[]
+  trailId: string
+  authToken: string
 }
 
 const PatientsTable: FC<PatientsTableProps> = (props) => {
-  const { patients, visitWindows } = props
+  const { patients, visitWindows, trailId, authToken } = props
 
   const {
     searchValue,
@@ -48,7 +50,11 @@ const PatientsTable: FC<PatientsTableProps> = (props) => {
           onClearValue={handleClearValue}
         />
 
-        <CreatePatientDialog visitWindows={visitWindows} />
+        <CreatePatientDialog
+          visitWindows={visitWindows}
+          trailId={trailId}
+          authToken={authToken}
+        />
       </div>
 
       {patientsToDisplay?.length ? (

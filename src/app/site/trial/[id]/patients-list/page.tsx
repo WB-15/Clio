@@ -39,7 +39,7 @@ const TabPatientsList: FC<TabPatientsListProps> = async (props) => {
     {
       trialId: id,
     },
-    { authToken }
+    { authToken, cache: 'no-store' }
   )
 
   const { data: visitWindowsResponse } = await getVisitWindows<IVisitWindow[]>(
@@ -53,6 +53,8 @@ const TabPatientsList: FC<TabPatientsListProps> = async (props) => {
     <PatientsTable
       patients={trialResponse?.patients}
       visitWindows={visitWindowsResponse}
+      trailId={id}
+      authToken={authToken}
     />
   )
 }

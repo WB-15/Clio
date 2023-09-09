@@ -5,6 +5,7 @@ export const QueryKeyBase = {
   USER: '/user',
   SITE: '/site/site_pcDyVS7XKSfx',
   TRIAL: '/trial',
+  PATIENT: '/patient',
   VISIT_WINDOWS: '/visit_windows',
 }
 

@@ -1,0 +1,1 @@
+export { postPatient } from './postPatient'

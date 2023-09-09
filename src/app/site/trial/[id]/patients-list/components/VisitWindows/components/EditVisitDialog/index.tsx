@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import {
   getLocalTimeZone,
   today,
@@ -23,17 +23,15 @@ import {
 } from '@/app/components/dialog'
 import { IVisitWindow } from '@/types/api'
 import { Calendar, TimeField } from '@/app/components/form'
-import { hoursToMinutes } from '@/utils'
+import { formattedNumber, hoursToMinutes } from '@/utils'
 
 interface EditVisitDialogProps {
   visitWindow: IVisitWindow
-  prevVisitWindow?: IVisitWindow
-  nextVisitWindow?: IVisitWindow
   onConfirm: (value: IVisitWindow) => void
 }
 
 const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
-  const { visitWindow, prevVisitWindow, nextVisitWindow, onConfirm } = props
+  const { visitWindow, onConfirm } = props
   const visitEndTime = dayjs(visitWindow.visit_datetime).add(
     visitWindow.duration_minutes,
     'minutes'
@@ -66,18 +64,6 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
     days: visitWindow.window_after_days,
   })
 
-  const minDate = prevVisitWindow
-    ? todayDate.add({
-        days: prevVisitWindow.visit_day + prevVisitWindow.window_after_days,
-      })
-    : todayDate
-
-  const maxDate = nextVisitWindow
-    ? todayDate.add({
-        days: nextVisitWindow.visit_day - nextVisitWindow.window_before_days,
-      })
-    : visitWindowBufferEndDate.add({ days: visitWindow.window_after_days })
-
   const handleConfirm = () => {
     const updatedMinutes = hoursToMinutes(startTime)
 
@@ -99,6 +85,13 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
     setEndTime(value.add({ minutes: visitWindow.duration_minutes }))
   }
 
+  const isSelectedInside = useMemo(
+    () =>
+      calendarDate.compare(visitWindowBufferStartDate) >= 0 &&
+      calendarDate.compare(visitWindowBufferEndDate) <= 0,
+    [calendarDate, visitWindowBufferEndDate, visitWindowBufferStartDate]
+  )
+
   return (
     <RadixDialogRoot open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <RadixDialogTrigger asChild>
@@ -117,7 +110,36 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
             classNameInner="min-h-[662px]"
           >
             <DialogHeader>Edit visit</DialogHeader>
-
+            <div className="flex gap-5 px-5 py-2">
+              <div className="flex items-center gap-1.5">
+                <Icon name="icon-trials" size={20} />
+                <span className="text-[14px] font-medium text-black">
+                  {visitWindow.name}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Icon name="icon-clock" size={20} />
+                <span className="text-[14px] font-medium text-black">
+                  {`${formattedNumber(visitWindow.duration_minutes / 60)}h`}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {visitWindow.visit_type === 'remote' ? (
+                  <Icon name="icon-phone" size={20} />
+                ) : (
+                  <Icon name="icon-building" size={20} />
+                )}
+                <span className="text-[14px] font-medium capitalize text-black">
+                  {visitWindow.visit_type}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Icon name="icon-no-food" size={20} />
+                <span className="text-[14px] font-medium text-black">
+                  Fasting
+                </span>
+              </div>
+            </div>
             <div className="grid flex-grow grid-cols-[464px,1fr]">
               <Calendar
                 aria-label="Date"
@@ -126,8 +148,6 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
                   onChange: setCalendarDate,
                 }}
                 isDateOutsideVisitWindow={(date) =>
-                  date.compare(minDate) <= 0 ||
-                  date.compare(maxDate) >= 0 ||
                   getDayOfWeek(date, 'en-US') === 0 ||
                   getDayOfWeek(date, 'en-US') === 6
                 }
@@ -172,6 +192,17 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
                 <Button type="submit" variant="primary" onClick={handleConfirm}>
                   Confirm
                 </Button>
+              }
+              leftFooterContent={
+                !isSelectedInside && (
+                  <div className="flex items-center gap-3">
+                    <Icon name="icon-error" size={32} color="#F48621" />
+                    <h4 className="text-sm font-semibold text-black">
+                      Your chosen date is out of window. <br />
+                      You can still try to reschedule to this day.
+                    </h4>
+                  </div>
+                )
               }
             />
           </DialogContent>

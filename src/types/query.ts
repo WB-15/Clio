@@ -4,4 +4,5 @@ export type FetchApiOptions = {
   urlSearchParams?: Record<string, any>
   method?: RequestInit['method']
   authToken?: string
+  cache?: string
 }

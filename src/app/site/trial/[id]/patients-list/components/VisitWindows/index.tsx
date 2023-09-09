@@ -13,12 +13,10 @@ const VisitWindows: FC<VisitWindowsProps> = (props) => {
 
   return (
     <div className="grid gap-y-2">
-      {visitWindows.map((visitWindow, i) => (
+      {visitWindows.map((visitWindow) => (
         <VisitWindowItem
           key={visitWindow.visit_window_id}
           visitWindow={visitWindow}
-          prevVisitWindow={visitWindows[i - 1]}
-          nextVisitWindow={visitWindows[i + 1]}
           setVisitWindowsData={setVisitWindowsData}
         />
       ))}

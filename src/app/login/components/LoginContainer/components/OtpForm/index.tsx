@@ -58,6 +58,7 @@ const OtpForm: FC<OtpFormProps> = (props) => {
 
       const authToken = data?.token
       if (authToken) {
+        localStorage.setItem('user', JSON.stringify(data?.user))
         setAuthCookiesAndRedirect(
           data?.token,
           getUserMainPath({
