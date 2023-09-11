@@ -11,6 +11,8 @@ interface PageHeaderProps {
   breadcrumb?: IUIBreadcrumb[]
   buttonSlotRight?: ReactNode
   headerWrapperClassName?: string
+  subTitle?: ReactNode
+  bottomInfo?: ReactNode
 }
 
 export const PageHeader: FC<PageHeaderProps> = (props) => {
@@ -20,19 +22,23 @@ export const PageHeader: FC<PageHeaderProps> = (props) => {
     buttonSlotLeft,
     buttonSlotRight,
     headerWrapperClassName,
+    subTitle,
+    bottomInfo,
   } = props
   return (
     <div className="grid gap-y-4">
       {breadcrumb && <Breadcrumb breadcrumb={breadcrumb} />}
+      {subTitle}
       <div
         className={clsx('flex items-center gap-x-3', headerWrapperClassName)}
       >
         {buttonSlotLeft}
-        <h1 className="line-clamp-1 text-[26px] font-bold leading-10">
+        <h1 className="line-clamp-1 w-full text-[26px] font-bold leading-10">
           {children}
         </h1>
         {buttonSlotRight}
       </div>
+      {bottomInfo}
     </div>
   )
 }

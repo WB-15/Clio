@@ -79,7 +79,7 @@ const CreatePatientDialog: FC<CreatePatientDialogProps> = (props) => {
     const patientData = {
       first_name: formData.first_name,
       last_name: formData.last_name,
-      email: formData.email,
+      email: formData?.email,
       phone: formData.phone_number,
       patient_number: formData.patient_number,
       user_id: user?.user_id,

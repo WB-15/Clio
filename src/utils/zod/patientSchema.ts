@@ -16,5 +16,11 @@ export const patientSchema = z.object({
     .regex(/^\+?\d{8,12}$/, {
       message: 'Please provide a valid phone number.',
     }),
-  email: z.string().min(1, { message: 'Email is required' }).email(),
+  email: z
+    .string()
+    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+      message: 'Please provide a valid email.',
+    })
+    .optional()
+    .or(z.literal('')),
 })

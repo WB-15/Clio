@@ -33,10 +33,20 @@ const ConfirmStatus = () => {
   )
 }
 
+const CompletedStatus = () => {
+  return (
+    <div className="flex w-[90px] items-center gap-0.5 rounded-lg border border-solid border-neutral-200 bg-neutral-100">
+      <Icon name="icon-confirm-gray" size={20} />
+      <p className="text-[12px] font-medium text-neutral-400">Completed</p>
+    </div>
+  )
+}
+
 export const Status: FC<StatusProps> = ({ status }) => {
   if (status === 'missed') return <MissedStatus />
   if (status === 'pending') return <PendingStatus />
   if (status === 'confirmed') return <ConfirmStatus />
+  if (status === 'completed') return <CompletedStatus />
 
   return null
 }

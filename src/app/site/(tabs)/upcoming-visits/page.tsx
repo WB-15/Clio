@@ -28,6 +28,7 @@ const TabUpcomingVisits: FC<TabUpcomingVisitsProps> = async () => {
     <UpcomingVisit
       upcomingVisitList={upcomingNextSevenDay}
       authToken={authToken}
+      isShowPatientDetail
     />
   ) : (
     <EmptyList

@@ -23,7 +23,12 @@ import {
 } from '@/app/components/dialog'
 import { IVisitWindow } from '@/types/api'
 import { Calendar, TimeField } from '@/app/components/form'
-import { formattedNumber, hoursToMinutes } from '@/utils'
+import {
+  addWeekdays,
+  formattedNumber,
+  hoursToMinutes,
+  subtractWeekdays,
+} from '@/utils'
 
 interface EditVisitDialogProps {
   visitWindow: IVisitWindow
@@ -32,6 +37,7 @@ interface EditVisitDialogProps {
 
 const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
   const { visitWindow, onConfirm } = props
+
   const visitEndTime = dayjs(visitWindow.visit_datetime).add(
     visitWindow.duration_minutes,
     'minutes'
@@ -57,12 +63,14 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
 
   const [calendarDate, setCalendarDate] = useState(dateOfVisit)
 
-  const visitWindowBufferStartDate = dateOfVisit.subtract({
-    days: visitWindow.window_before_days,
-  })
-  const visitWindowBufferEndDate = dateOfVisit.add({
-    days: visitWindow.window_after_days,
-  })
+  const visitWindowBufferStartDate = subtractWeekdays(
+    dateOfVisit,
+    visitWindow.window_before_days
+  )
+  const visitWindowBufferEndDate = addWeekdays(
+    dateOfVisit,
+    visitWindow.window_after_days
+  )
 
   const handleConfirm = () => {
     const updatedMinutes = hoursToMinutes(startTime)
@@ -133,12 +141,14 @@ const EditVisitDialog: FC<EditVisitDialogProps> = (props) => {
                   {visitWindow.visit_type}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Icon name="icon-no-food" size={20} />
-                <span className="text-[14px] font-medium text-black">
-                  Fasting
-                </span>
-              </div>
+              {visitWindow.fasting ? (
+                <div className="flex items-center gap-1.5">
+                  <Icon name="icon-no-food" size={20} />
+                  <span className="text-[14px] font-medium text-black">
+                    Fasting
+                  </span>
+                </div>
+              ) : null}
             </div>
             <div className="grid flex-grow grid-cols-[464px,1fr]">
               <Calendar

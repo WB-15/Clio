@@ -1,3 +1,5 @@
+import { IUpcomingBase } from './upcomingVisit'
+
 export interface ITrialBase {
   trial_id: string
   name: string
@@ -35,4 +37,5 @@ export interface IPatient {
   missed_visits: number
   completed_visits: number
   total_visits: number
+  visits: IUpcomingBase[]
 }

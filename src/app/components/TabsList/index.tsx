@@ -12,11 +12,10 @@ interface TabsListProps extends ComponentProps<typeof RadixTabsList> {
 }
 
 export const TabsList: FC<TabsListProps> = (props) => {
-  const { tabs, className, ...rest } = props
+  const { tabs, className } = props
 
   return (
     <RadixTabsList
-      {...rest}
       className={clsx(
         'grid auto-cols-auto grid-flow-col justify-start gap-x-6 border-b border-neutral-200 font-medium leading-tight',
         className

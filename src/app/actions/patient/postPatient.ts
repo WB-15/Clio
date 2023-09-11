@@ -9,7 +9,7 @@ type IPostPatient = {
   last_name: string
   patient_number: string
   phone: string
-  email: string
+  email?: string
 }
 
 export const postPatient = <T>(
