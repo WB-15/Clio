@@ -13,6 +13,7 @@ interface PageHeaderProps {
   headerWrapperClassName?: string
   subTitle?: ReactNode
   bottomInfo?: ReactNode
+  childrenClassName?: string
 }
 
 export const PageHeader: FC<PageHeaderProps> = (props) => {
@@ -24,6 +25,7 @@ export const PageHeader: FC<PageHeaderProps> = (props) => {
     headerWrapperClassName,
     subTitle,
     bottomInfo,
+    childrenClassName,
   } = props
   return (
     <div className="grid gap-y-4">
@@ -33,7 +35,12 @@ export const PageHeader: FC<PageHeaderProps> = (props) => {
         className={clsx('flex items-center gap-x-3', headerWrapperClassName)}
       >
         {buttonSlotLeft}
-        <h1 className="line-clamp-1 w-full text-[26px] font-bold leading-10">
+        <h1
+          className={clsx(
+            'line-clamp-1 text-[26px] font-bold leading-10',
+            childrenClassName
+          )}
+        >
           {children}
         </h1>
         {buttonSlotRight}

@@ -3,6 +3,7 @@
 import dayjs from 'dayjs'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
+import { useRouter } from 'next/navigation'
 import { patchVisit } from '@/app/actions/visit/patchVisit'
 import { IUpcomingVisit } from '@/types/api/upcomingVisit'
 import { addToastToStack } from '@/utils'
@@ -25,6 +26,7 @@ export const UpcomingVisit: FC<UpcomingVisitProps> = ({
   patientName,
   isShowPatientDetail,
 }) => {
+  const router = useRouter()
   const [upcomingVisitListParse, setUpcomingVisitListParse] =
     useState<ParseData>({})
 
@@ -64,7 +66,7 @@ export const UpcomingVisit: FC<UpcomingVisitProps> = ({
       { authToken }
     )
     request.then((res) => {
-      const hasError = res.status >= 400 && res.status <= 499
+      const hasError = res.status >= 400 && res.status <= 500
 
       if (hasError) {
         addToastToStack({
@@ -75,7 +77,7 @@ export const UpcomingVisit: FC<UpcomingVisitProps> = ({
 
         return
       }
-
+      router.refresh()
       addToastToStack({
         variant: 'success',
         title: 'Success',

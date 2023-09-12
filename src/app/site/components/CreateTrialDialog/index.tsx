@@ -247,6 +247,7 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = ({
           <Button
             variant="primary"
             iconSlotLeft={<Icon size={20} name="icon-plus" />}
+            className="shrink-0"
           >
             Create Trial
           </Button>
@@ -259,7 +260,9 @@ const CreateTrialDialog: FC<CreateTrialDialogProps> = ({
             position="right"
             onInteractOutside={(e) => e.preventDefault()}
           >
-            <DialogHeader>Create Trial</DialogHeader>
+            <DialogHeader>
+              {requestType === 'post' ? 'Create Trial' : 'Edit Trial'}
+            </DialogHeader>
             <div className="hide-scrollbar flex-grow overflow-auto py-6">
               <CreateTrialForm
                 register={register}

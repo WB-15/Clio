@@ -120,7 +120,8 @@ const VisitWindowsAccordion: FC<VisitWindowsAccordionProps> = (props) => {
               key: `visit_day-${i}`,
               children: watchVisitDay && (
                 <>
-                  Day: <span className="font-medium">{watchVisitDay}</span>
+                  Day:
+                  <span className="ml-1 font-medium">{watchVisitDay} day</span>
                 </>
               ),
             },
@@ -130,17 +131,31 @@ const VisitWindowsAccordion: FC<VisitWindowsAccordionProps> = (props) => {
               children: isVisitWindowSeparate
                 ? (watchBeforeDays || watchAfterDays) && (
                     <>
-                      Window:{' '}
-                      <span className="font-medium">
-                        {`${watchBeforeDays || 0}/${watchAfterDays || 0}`}
+                      Window:
+                      <span className="ml-1 font-medium">
+                        {`${
+                          (watchBeforeDays
+                            ? parseInt(watchBeforeDays as unknown as string, 10)
+                            : 0) +
+                          (watchAfterDays
+                            ? parseInt(watchAfterDays as unknown as string, 10)
+                            : 0)
+                        } days`}
                       </span>
                     </>
                   )
                 : watchBuffer && (
                     <>
-                      Window:{' '}
-                      <span className="font-medium">
-                        {`${watchBuffer || 0}/${watchBuffer || 0}`}
+                      Window:
+                      <span className="ml-1 font-medium">
+                        {`${
+                          (watchBuffer
+                            ? parseInt(watchBuffer as unknown as string, 10)
+                            : 0) +
+                          (watchBuffer
+                            ? parseInt(watchBuffer as unknown as string, 10)
+                            : 0)
+                        } days`}
                       </span>
                     </>
                   ),

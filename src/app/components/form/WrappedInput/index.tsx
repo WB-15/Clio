@@ -14,6 +14,7 @@ interface WrappedInputProps extends ComponentPropsWithoutRef<'input'> {
   absoluteError?: boolean
   iconSlotLeft?: ReactNode
   iconSlotRight?: ReactNode
+  iconSlotRightClass?: ReactNode
 }
 
 export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
@@ -32,6 +33,7 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
       absoluteError = false,
       iconSlotLeft,
       iconSlotRight,
+      iconSlotRightClass,
       ...rest
     } = props
 
@@ -93,7 +95,12 @@ export const WrappedInput = forwardRef<HTMLInputElement, WrappedInputProps>(
           )}
 
           {iconSlotRight && (
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2">
+            <span
+              className={clsx(
+                'absolute right-2.5 top-1/2 -translate-y-1/2',
+                iconSlotRightClass
+              )}
+            >
               {iconSlotRight}
             </span>
           )}

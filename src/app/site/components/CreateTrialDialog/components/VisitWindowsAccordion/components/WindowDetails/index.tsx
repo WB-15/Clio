@@ -48,7 +48,7 @@ const WindowDetails: FC<WindowDetailsProps> = (props) => {
         labelHeading="Separate before and after windows"
       />
       {isVisitWindowSeparate ? (
-        <div className="grid grid-cols-2 items-start gap-3">
+        <div className="grid grid-cols-3 items-start gap-3">
           <WrappedInput
             placeholder="Enter window before"
             labelContent="Window before"
@@ -67,12 +67,14 @@ const WindowDetails: FC<WindowDetailsProps> = (props) => {
           />
         </div>
       ) : (
-        <WrappedInput
-          placeholder="Enter window buffer +/- days"
-          labelContent="Window buffer +/- days"
-          errorMessage={errors.visit_windows?.[index]?.window_buffer?.message}
-          {...register(`visit_windows.${index}.window_buffer`)}
-        />
+        <div className="grid grid-cols-3 items-start gap-3">
+          <WrappedInput
+            placeholder="Enter window buffer +/- days"
+            labelContent="Window buffer +/- days"
+            errorMessage={errors.visit_windows?.[index]?.window_buffer?.message}
+            {...register(`visit_windows.${index}.window_buffer`)}
+          />
+        </div>
       )}
       <hr />
       <ControlledSelect
